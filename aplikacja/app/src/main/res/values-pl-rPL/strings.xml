@@ -4,4 +4,7 @@
     <string name="btnMainToDBMain">Menu bazy danych</string>
     <string name="btnMainToCoMMMain">Menu łączności</string>
     <string name="btnDBMainToDBAddRecord">Dodaj nowy rekord</string>
+    <string name="fragmentMainLabel">Menu główne</string>
+    <string name="fragmentDBMainLabel">DB menu główne</string>
+    <string name="fragmentCommMainLabel">Menu główne łączności</string>
 </resources>

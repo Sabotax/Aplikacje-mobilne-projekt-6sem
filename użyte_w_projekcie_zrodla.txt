@@ -1,0 +1,5 @@
+Nawigacja (23 maj)
+https://www.youtube.com/watch?v=Qe_6OmmFaR8&list=WL&index=6&t=777s
+https://mkyong.com/android/how-to-set-default-activity-for-android-application/
+https://stackoverflow.com/questions/50502269/illegalstateexception-link-does-not-have-a-navcontroller-set
+---

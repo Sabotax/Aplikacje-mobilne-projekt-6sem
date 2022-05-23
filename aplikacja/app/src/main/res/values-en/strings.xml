@@ -4,4 +4,7 @@
     <string name="btnMainToDBMain">Database Menu</string>
     <string name="btnMainToCoMMMain">Communication Menu</string>
     <string name="btnDBMainToDBAddRecord">Add new record</string>
+    <string name="fragmentMainLabel">Main menu</string>
+    <string name="fragmentDBMainLabel">DB main menu</string>
+    <string name="fragmentCommMainLabel">Communication main menu</string>
 </resources>
