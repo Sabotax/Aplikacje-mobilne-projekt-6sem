@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello_blank_fragment">Witam, pusty fragment</string>
+    <string name="btnMainToDBMain">Menu bazy danych</string>
+    <string name="btnMainToCoMMMain">Menu łączności</string>
+    <string name="btnDBMainToDBAddRecord">Dodaj nowy rekord</string>
+</resources>

@@ -1,8 +1,9 @@
 ma się dać wracać strzałką po lewej górnej, a w razie co zostawię interfejs z tymi kropkami po prawej górnej
 menu główne:
 	-na środku przyciski prowadzące do pozostałych sekcji:
-		-komunikacja z esp bezpośrednia
-		-komunikacja z serwerem
+		-komunikacja 
+			- esp
+			- serwer
 		-notatnik(baza danych)
 			- dodaj rekord na dziś
 			- dodaj rekord

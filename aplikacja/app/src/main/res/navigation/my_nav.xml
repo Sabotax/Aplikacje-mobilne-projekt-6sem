@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.beeallrounder.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_DBMainFragment"
+            app:destination="@id/DBMainFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_commMainFragment"
+            app:destination="@id/commMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/DBMainFragment"
+        android:name="com.example.beeallrounder.DBMainFragment"
+        android:label="fragment_d_b_main"
+        tools:layout="@layout/fragment_d_b_main" >
+        <action
+            android:id="@+id/action_DBMainFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/commMainFragment"
+        android:name="com.example.beeallrounder.CommMainFragment"
+        android:label="fragment_comm_main"
+        tools:layout="@layout/fragment_comm_main" >
+        <action
+            android:id="@+id/action_commMainFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/DBAddFragment"
+        android:name="com.example.beeallrounder.DBAddFragment"
+        android:label="fragment_d_b_add"
+        tools:layout="@layout/fragment_d_b_add" />
+</navigation>
