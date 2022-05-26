@@ -7,4 +7,5 @@
     <string name="fragmentMainLabel">Main menu</string>
     <string name="fragmentDBMainLabel">DB main menu</string>
     <string name="fragmentCommMainLabel">Communication main menu</string>
+    <string name="btnDBAddRecordSend">Add</string>
 </resources>

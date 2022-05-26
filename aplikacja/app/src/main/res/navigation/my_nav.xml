@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_DBMainFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_DBMainFragment_to_DBAddFragment"
+            app:destination="@id/DBAddFragment" />
     </fragment>
     <fragment
         android:id="@+id/commMainFragment"
@@ -39,5 +42,9 @@
         android:id="@+id/DBAddFragment"
         android:name="com.example.beeallrounder.DBAddFragment"
         android:label="fragment_d_b_add"
-        tools:layout="@layout/fragment_d_b_add" />
+        tools:layout="@layout/fragment_d_b_add" >
+        <action
+            android:id="@+id/action_DBAddFragment_to_DBMainFragment"
+            app:destination="@id/DBMainFragment" />
+    </fragment>
 </navigation>
