@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.navigation.Navigation
+import com.example.beeallrounder.data.UserDao
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,7 +46,7 @@ class DBAddFragment : Fragment() {
 
         val btnDBAddRecordSend = view.findViewById<Button>(R.id.btnDBAddRecordSend)
         btnDBAddRecordSend.setOnClickListener {
-            DBManager.addRecord(view.findViewById<EditText>(R.id.edittextDBAddRecordName).text.toString())
+            //UserDao.addRecord(view.findViewById<EditText>(R.id.edittextDBAddRecordName).text.toString())
             val text = "Hello toast!"
             val duration = Toast.LENGTH_SHORT
 

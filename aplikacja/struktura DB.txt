@@ -1,0 +1,9 @@
+baza ul: waga, temperatura, czy agresywne itp
+	podlega pod
+		baza pomiar, która ma np 15 takich uli (a raczej ich snapshotów z danego pomiaru/dnia) oraz data i która pasieka
+			podlega pod:
+				baza pasieka, która ma takie pomiary oraz lokalizację, datę utworzenia itp
+					podlega pod bazę pszczelarz
+						który ma wiele takich pasiek
+
+będzie też musiała być opcja do ustawienia przy pomiarze, ile uli mierzy i ich numery itp do jakiej pasieki wrzucić
