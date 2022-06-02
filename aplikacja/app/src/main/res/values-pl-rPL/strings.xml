@@ -8,4 +8,5 @@
     <string name="fragmentDBMainLabel">DB menu główne</string>
     <string name="fragmentCommMainLabel">Menu główne łączności</string>
     <string name="btnDBAddRecordSend">Dodaj</string>
+    <string name="btnDBMainToDBList">Pokaż rekordy</string>
 </resources>
