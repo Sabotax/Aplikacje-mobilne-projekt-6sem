@@ -9,4 +9,6 @@
     <string name="fragmentCommMainLabel">Communication main menu</string>
     <string name="btnDBAddRecordSend">Add</string>
     <string name="btnDBMainToDBList">Display records</string>
+    <string name="radioDBAddYes">Yes</string>
+    <string name="radioDBAddNo">No</string>
 </resources>

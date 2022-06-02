@@ -9,4 +9,6 @@
     <string name="fragmentCommMainLabel">Menu główne łączności</string>
     <string name="btnDBAddRecordSend">Dodaj</string>
     <string name="btnDBMainToDBList">Pokaż rekordy</string>
+    <string name="radioDBAddYes">Tak</string>
+    <string name="radioDBAddNo">Nie</string>
 </resources>
