@@ -7,5 +7,7 @@ import androidx.room.ColumnInfo
 @Entity(tableName = "Beehive_snapshot")
 data class Beehive_snapshot (
     @PrimaryKey(autoGenerate = true) val id : Int,
-    val weight : Double?
+    val date : String,
+    val hiveNumber: Int,
+    val notes: String
 )
