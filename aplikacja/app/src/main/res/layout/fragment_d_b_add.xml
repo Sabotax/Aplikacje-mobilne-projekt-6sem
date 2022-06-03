@@ -61,6 +61,7 @@
         android:layout_height="37dp"
         android:ems="10"
         android:inputType="numberDecimal"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/DBAddileTextRamekZMiodemText"
         app:layout_constraintTop_toBottomOf="@+id/DBAddileTextRamekZPierzgaEdit"
         tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
@@ -69,23 +70,22 @@
         android:id="@+id/btnDBAddRecordSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="-6dp"
+        android:layout_marginEnd="150dp"
         android:text="@string/btnDBAddRecordSend"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/DBAddNotatkiEdit" />
 
     <EditText
         android:id="@+id/DBAddDateEdit"
         android:layout_width="150dp"
-        android:layout_height="46dp"
+        android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:ems="10"
         android:inputType="date"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck"
-        tools:layout_editor_absoluteY="43dp" />
+        app:layout_constraintTop_toBottomOf="@+id/DBAddDateText"
+        tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/DBAddDateText"
@@ -99,9 +99,8 @@
 
     <EditText
         android:id="@+id/DBAddMainNumberEdit"
-        android:layout_width="153dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
         android:layout_marginEnd="36dp"
         android:ems="10"
         android:inputType="number"
@@ -113,8 +112,8 @@
         android:id="@+id/DBAddZachowanieText"
         android:layout_width="110dp"
         android:layout_height="30dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="48dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="40dp"
         android:text="@string/radioGroupDBAddZachowanie"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -134,13 +133,10 @@
         android:id="@+id/DBAddRadioGroupJajeczka"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddTakText"
-        app:layout_constraintVertical_bias="0.02">
+        app:layout_constraintTop_toBottomOf="@+id/DBAddTakText">
 
         <RadioButton
             android:id="@+id/DBAddRadioGroupJajeczkaRadioYes"
@@ -160,12 +156,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddRadioGroupJajeczka"
-        app:layout_constraintVertical_bias="0.025">
+        app:layout_constraintStart_toStartOf="@+id/DBAddRadioGroupJajeczka"
+        app:layout_constraintTop_toBottomOf="@+id/DBAddRadioGroupJajeczka">
 
         <RadioButton
             android:id="@+id/DBAddRadioGroupCzerwOtwartyRadioYes"
@@ -185,12 +177,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddRadioGroupCzerwOtwarty"
-        app:layout_constraintVertical_bias="0.025">
+        app:layout_constraintStart_toStartOf="@+id/DBAddRadioGroupCzerwOtwarty"
+        app:layout_constraintTop_toBottomOf="@+id/DBAddRadioGroupCzerwOtwarty">
 
         <RadioButton
             android:id="@+id/DBAddRadioGroupCzerwZasklepionyRadioYes"
@@ -211,12 +199,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddRadioGroupCzerwZasklepiony"
-        app:layout_constraintVertical_bias="0.025">
+        app:layout_constraintStart_toStartOf="@+id/DBAddRadioGroupCzerwZasklepiony"
+        app:layout_constraintTop_toBottomOf="@+id/DBAddRadioGroupCzerwZasklepiony">
 
         <RadioButton
             android:id="@+id/DBAddRadioGroupCzerwTrutowyRadioYes"
@@ -237,12 +221,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddRadioGroupCzerwTrutowy"
-        app:layout_constraintVertical_bias="0.025">
+        app:layout_constraintStart_toStartOf="@+id/DBAddRadioGroupCzerwTrutowy"
+        app:layout_constraintTop_toBottomOf="@+id/DBAddRadioGroupCzerwTrutowy">
 
         <RadioButton
             android:id="@+id/DBAddRadioGroupNakropRadioYes"
@@ -263,12 +243,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddRadioGroupNakrop"
-        app:layout_constraintVertical_bias="0.025">
+        app:layout_constraintStart_toStartOf="@+id/DBAddRadioGroupNakrop"
+        app:layout_constraintTop_toBottomOf="@+id/DBAddRadioGroupNakrop">
 
         <RadioButton
             android:id="@+id/DBAddRadioGroupMiodZasklepionyRadioYes"
@@ -289,12 +265,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.05"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddRadioGroupMiodZasklepiony"
-        app:layout_constraintVertical_bias="0.025">
+        app:layout_constraintStart_toStartOf="@+id/DBAddRadioGroupMiodZasklepiony"
+        app:layout_constraintTop_toBottomOf="@+id/DBAddRadioGroupMiodZasklepiony">
 
         <RadioButton
             android:id="@+id/DBAddRadioGroupPierzgaRadioYes"
@@ -336,7 +308,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="20dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DBAddZachowanieText">
@@ -369,17 +341,18 @@
 
     <RadioGroup
         android:id="@+id/DBAddRadioGroupSila"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="20dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/DBAddRadioGroupZachowanie"
         app:layout_constraintTop_toBottomOf="@+id/DBAddSilaText">
 
         <RadioButton
             android:id="@+id/DBAddRadioGroupZachowanieSilaSlaba"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@null"
             android:drawableTop="@android:drawable/btn_radio"
@@ -388,7 +361,7 @@
 
         <RadioButton
             android:id="@+id/DBAddRadioGroupZachowanieSilaSrednia"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@null"
             android:drawableTop="@android:drawable/btn_radio"
@@ -396,7 +369,7 @@
 
         <RadioButton
             android:id="@+id/DBAddRadioGroupZachowanieSilaSilna"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@null"
             android:drawableTop="@android:drawable/btn_radio"
@@ -421,6 +394,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="164dp"
         android:text="@string/DBAddileText"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DBAddRadioGroupSila" />
 
@@ -430,6 +404,7 @@
         android:layout_height="48dp"
         android:ems="10"
         android:inputType="numberDecimal"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/DBAddileRamekEdit"
         app:layout_constraintTop_toBottomOf="@+id/DBAddileRamekEdit" />
 
@@ -439,6 +414,7 @@
         android:layout_height="48dp"
         android:ems="10"
         android:inputType="numberDecimal"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/DBAddileRamekEdit"
         app:layout_constraintTop_toBottomOf="@+id/DBAddileKorpusowEdit" />
 
@@ -448,6 +424,7 @@
         android:layout_height="48dp"
         android:ems="10"
         android:inputType="numberDecimal"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/DBAddileText"
         app:layout_constraintTop_toBottomOf="@+id/DBAddileText" />
 
@@ -457,6 +434,7 @@
         android:layout_height="48dp"
         android:ems="10"
         android:inputType="numberDecimal"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/DBAddileRamekText"
         app:layout_constraintTop_toBottomOf="@+id/DBAddileText" />
 
@@ -466,6 +444,7 @@
         android:layout_height="48dp"
         android:ems="10"
         android:inputType="numberDecimal"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/DBAddileKorpusowText"
         app:layout_constraintTop_toBottomOf="@+id/DBAddileTextRamekZCzerwiemEdit" />
 
@@ -475,6 +454,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:text="@string/DBAddileRamekText"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/DBAddileRamekEdit"
         app:layout_constraintTop_toTopOf="@+id/DBAddileRamekEdit" />
 
@@ -484,6 +464,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:text="@string/DBAddileKorpusowText"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/DBAddileKorpusowEdit"
         app:layout_constraintTop_toTopOf="@+id/DBAddileKorpusowEdit" />
 
@@ -493,6 +474,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:text="@string/DBAddileRamekZMiodemText"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/DBAddileTextRamekZMiodemEdit"
         app:layout_constraintTop_toBottomOf="@+id/DBAddileKorpusowEdit" />
 
@@ -502,6 +484,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:text="@string/DBAddileRamekZCzerwiemText"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/DBAddileTextRamekZCzerwiemEdit"
         app:layout_constraintTop_toTopOf="@+id/DBAddileTextRamekZCzerwiemEdit" />
 
@@ -511,6 +494,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:text="@string/DBAddileRamekZPierzgaText"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/DBAddileTextRamekZPierzgaEdit"
         app:layout_constraintTop_toBottomOf="@+id/DBAddileTextRamekZCzerwiemEdit" />
 
@@ -520,6 +504,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:text="@string/DBAddileRamekZWezaText"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/DBAddileTextRamekZWezaEdit"
         app:layout_constraintTop_toTopOf="@+id/DBAddileTextRamekZWezaEdit" />
 
@@ -528,7 +513,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="20dp"
         android:text="@string/DBAddNotatkiText"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/DBAddRadioGroupNakrop"
@@ -536,13 +521,16 @@
 
     <EditText
         android:id="@+id/DBAddNotatkiEdit"
-        android:layout_width="176dp"
-        android:layout_height="109dp"
+        android:layout_width="133dp"
+        android:layout_height="50dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="20dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/DBAddNotatkiText"
         app:layout_constraintTop_toBottomOf="@+id/DBAddNotatkiText"
         tools:ignore="SpeakableTextPresentCheck" />
@@ -554,5 +542,14 @@
         android:text="@string/DBAddRadioGroupJajeczkaText"
         app:layout_constraintStart_toEndOf="@+id/DBAddRadioGroupJajeczka"
         app:layout_constraintTop_toTopOf="@+id/DBAddRadioGroupJajeczka" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="42dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintGuide_end="129dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
