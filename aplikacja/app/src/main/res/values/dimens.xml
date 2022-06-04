@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_left">9dp</dimen>
+    <dimen name="margin_right">401dp</dimen>
+    <dimen name="total_fake_width">411dp</dimen>
+    <dimen name="total_true_height">731dp</dimen>
+</resources>
