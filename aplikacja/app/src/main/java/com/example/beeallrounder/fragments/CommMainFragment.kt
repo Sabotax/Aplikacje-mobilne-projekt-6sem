@@ -1,12 +1,11 @@
-package com.example.beeallrounder
+package com.example.beeallrounder.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.navigation.Navigation
+import com.example.beeallrounder.R
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -15,10 +14,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [DBMainFragment.newInstance] factory method to
+ * Use the [CommMainFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class DBMainFragment : Fragment() {
+class CommMainFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -36,21 +35,7 @@ class DBMainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_d_b_main, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val btnDBMainToDBAdd = view.findViewById<Button>(R.id.btnDBMainToDBAdd)
-        btnDBMainToDBAdd.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_DBMainFragment_to_DBAddFragment)
-        }
-
-        val btnDBMainToDBList = view.findViewById<Button>(R.id.btnDBMainToDBList)
-        btnDBMainToDBList.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_DBMainFragment_to_DBListFragment)
-        }
+        return inflater.inflate(R.layout.fragment_comm_main, container, false)
     }
 
     companion object {
@@ -60,12 +45,12 @@ class DBMainFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment DBMainFragment.
+         * @return A new instance of fragment CommMainFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            DBMainFragment().apply {
+            CommMainFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

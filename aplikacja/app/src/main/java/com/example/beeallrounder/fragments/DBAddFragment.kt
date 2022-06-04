@@ -1,4 +1,4 @@
-package com.example.beeallrounder
+package com.example.beeallrounder.fragments
 
 import android.app.AlertDialog
 import android.content.DialogInterface
@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.beeallrounder.R
 import com.example.beeallrounder.data.Beehive_snapshot
 import com.example.beeallrounder.data.UserDao
 import com.example.beeallrounder.data.UserViewModel
