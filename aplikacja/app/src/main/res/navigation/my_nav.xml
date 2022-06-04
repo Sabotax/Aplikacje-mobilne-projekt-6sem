@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.beeallrounder.MainFragment"
+        android:name="com.example.beeallrounder.fragments.MainFragment"
         android:label="@string/fragmentMainLabel"
         tools:layout="@layout/fragment_main">
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/DBMainFragment"
-        android:name="com.example.beeallrounder.DBMainFragment"
+        android:name="com.example.beeallrounder.fragments.DBMainFragment"
         android:label="@string/fragmentDBMainLabel"
         tools:layout="@layout/fragment_d_b_main">
         <action
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/commMainFragment"
-        android:name="com.example.beeallrounder.CommMainFragment"
+        android:name="com.example.beeallrounder.fragments.CommMainFragment"
         android:label="@string/fragmentCommMainLabel"
         tools:layout="@layout/fragment_comm_main">
         <action
@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/DBAddFragment"
-        android:name="com.example.beeallrounder.DBAddFragment"
+        android:name="com.example.beeallrounder.fragments.DBAddFragment"
         android:label="fragment_d_b_add"
         tools:layout="@layout/fragment_d_b_add" >
         <action
@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/DBListFragment"
-        android:name="com.example.beeallrounder.DBListFragment"
+        android:name="com.example.beeallrounder.fragments.DBListFragment"
         android:label="fragment_d_b_list"
         tools:layout="@layout/fragment_d_b_list" >
         <action
