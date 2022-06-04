@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="24sp">
+
+    <TextView
+        android:id="@+id/recyclerRowIDText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textSize="40sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/recyclerRowDateText"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="24.10.2022"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerRowIDText"
+        app:layout_constraintStart_toEndOf="@+id/recyclerRowIDText"
+        app:layout_constraintTop_toTopOf="@+id/recyclerRowIDText" />
+
+    <TextView
+        android:id="@+id/recyclerRowNotesText"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:text="notatkiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerRowIDText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/recyclerRowNumberText"
+        app:layout_constraintTop_toTopOf="@+id/recyclerRowIDText" />
+
+    <TextView
+        android:id="@+id/recyclerRowNumberText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="1"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerRowIDText"
+        app:layout_constraintStart_toEndOf="@+id/recyclerRowDateText"
+        app:layout_constraintTop_toTopOf="@+id/recyclerRowIDText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
