@@ -70,8 +70,8 @@
         android:id="@+id/btnDBAddRecordSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-6dp"
-        android:layout_marginEnd="150dp"
+        android:layout_marginTop="212dp"
+        android:layout_marginEnd="4dp"
         android:text="@string/btnDBAddRecordSend"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DBAddNotatkiEdit" />
@@ -542,14 +542,5 @@
         android:text="@string/DBAddRadioGroupJajeczkaText"
         app:layout_constraintStart_toEndOf="@+id/DBAddRadioGroupJajeczka"
         app:layout_constraintTop_toTopOf="@+id/DBAddRadioGroupJajeczka" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="42dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintGuide_end="129dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
