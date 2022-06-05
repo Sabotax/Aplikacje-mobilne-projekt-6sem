@@ -51,6 +51,11 @@ class MainFragment : Fragment() {
         fragmentMainToDBMain.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_mainFragment_to_DBMainFragment)
         }
+
+        val fragmentMainToCommMain = view.findViewById<Button>(R.id.fragmentMainToCOMMMain)
+        fragmentMainToCommMain.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_mainFragment_to_commMainFragment)
+        }
     }
 
     companion object {

@@ -37,4 +37,5 @@
     <string name="DBAddRadioGroupMiodZasklepionyText">Miód zasklepiony</string>
     <string name="DBAddRadioGroupPierzgaText">Pierzga</string>
     <string name="ToastSuccessfulyAddedSnapshot">Pomyślnie dodano rekord</string>
+    <string name="btnCommMainLocalDownloadText">Pobierz z lokalnego esp</string>
 </resources>

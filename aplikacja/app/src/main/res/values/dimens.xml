@@ -4,4 +4,5 @@
     <dimen name="margin_right">401dp</dimen>
     <dimen name="total_fake_width">411dp</dimen>
     <dimen name="total_true_height">731dp</dimen>
+    <dimen name="srodek_chyba_na">184dp</dimen>
 </resources>

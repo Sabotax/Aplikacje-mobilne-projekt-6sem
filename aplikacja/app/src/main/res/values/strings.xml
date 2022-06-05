@@ -37,4 +37,5 @@
     <string name="DBAddRadioGroupMiodZasklepionyText">Miód zasklepiony</string>
     <string name="DBAddRadioGroupPierzgaText">Pierzga</string>
     <string name="ToastSuccessfulyAddedSnapshot">Successfuly added record</string>
+    <string name="btnCommMainLocalDownloadText">Download from local esp</string>
 </resources>
