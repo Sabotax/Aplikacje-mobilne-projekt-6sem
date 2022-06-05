@@ -21,7 +21,35 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="401dp" />
 
-<!--    <Button-->
+    <Button
+        android:id="@+id/btnCommLocalDownloadConnect"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="48dp"
+        android:text="@string/btnCommLocalDownloadConnect"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnCommLocalDownloadDownloadAll"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/btnCommLocalDownloadDownloadAll"
+        app:layout_constraintStart_toStartOf="@+id/btnCommLocalDownloadConnect"
+        app:layout_constraintTop_toBottomOf="@+id/btnCommLocalDownloadConnect" />
+
+    <Button
+        android:id="@+id/btnCommLocalDownloadDownloadNew"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/btnCommLocalDownloadDownloadNew"
+        app:layout_constraintStart_toStartOf="@+id/btnCommLocalDownloadDownloadAll"
+        app:layout_constraintTop_toBottomOf="@+id/btnCommLocalDownloadDownloadAll" />
+
+    <!--    <Button-->
 <!--        android:id="@+id/button"-->
 <!--        android:layout_width="wrap_content"-->
 <!--        android:layout_height="wrap_content"-->

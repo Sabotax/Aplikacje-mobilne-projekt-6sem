@@ -38,4 +38,7 @@
     <string name="DBAddRadioGroupPierzgaText">Pierzga</string>
     <string name="ToastSuccessfulyAddedSnapshot">Pomyślnie dodano rekord</string>
     <string name="btnCommMainLocalDownloadText">Pobierz z lokalnego esp</string>
+    <string name="btnCommLocalDownloadConnect">Połącz z esp</string>
+    <string name="btnCommLocalDownloadDownloadAll">Pobierz wszystkie dane</string>
+    <string name="btnCommLocalDownloadDownloadNew">Pobierz nowe dane</string>
 </resources>
