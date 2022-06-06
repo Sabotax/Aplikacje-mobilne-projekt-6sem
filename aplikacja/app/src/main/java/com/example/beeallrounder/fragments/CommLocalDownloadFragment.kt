@@ -5,7 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import com.example.beeallrounder.LocalComm.TcpClient
 import com.example.beeallrounder.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlin.concurrent.thread
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,6 +46,18 @@ class CommLocalDownloadFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val btnCommLocalDownloadDownloadAll = view.findViewById<Button>(R.id.btnCommLocalDownloadDownloadAll)
+        btnCommLocalDownloadDownloadAll.setOnClickListener {
+            connectTcp()
+        }
+
+
+    }
+
+    private fun connectTcp() {
+        //thread( start = true, block= { TcpClient.client() }, name = "TcpClientThread1")
+        CoroutineScope(Dispatchers.Default).launch { TcpClient.client() }
     }
 
     companion object {
