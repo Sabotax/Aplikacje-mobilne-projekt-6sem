@@ -29,7 +29,7 @@ class TcpClient private constructor() {
                 Log.d("TcpClient debugging","Client sending /CommDownloadAll")
                 output.println("GET /CommDownloadAll HTTP/1.1  \r\n")
                 input.forEachLine {
-                    Log.d("TcpClient dbg receive3", it)
+                    //Log.d("TcpClient dbg receive3", it)
                     if (it.contains("MSG:") ) {
                         returning_msg = it
                     }

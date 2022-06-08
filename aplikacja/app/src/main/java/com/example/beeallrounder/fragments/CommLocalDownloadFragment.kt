@@ -16,8 +16,6 @@ import com.example.beeallrounder.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.File
-import java.io.FileOutputStream
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -56,45 +54,47 @@ class CommLocalDownloadFragment : Fragment() {
 
         val btnCommLocalDownloadDownloadAll = view.findViewById<Button>(R.id.btnCommLocalDownloadDownloadAll)
         btnCommLocalDownloadDownloadAll.setOnClickListener {
-            connectTcp()
+            downloadAll()
         }
 
 
     }
 
-    private fun connectTcp() {
+    private fun downloadAll() {
         CoroutineScope(Dispatchers.Default).launch {
             val wynik = TcpClient.DownloadAll()
             if(wynik[0] as Boolean) {
-                // TODO udalo sie wiadomosc wycieta + save
                 Handler(Looper.getMainLooper()).post {
                     if (wynik[1] == null) {
-                        Toast.makeText(requireContext(),"Udało się, ale wiadomość nie została zidentyfikowana",Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireContext(),R.string.ToastSuccessfulyReceivedMsgUnidentified,Toast.LENGTH_LONG).show()
                     }
                     else {
-                        Toast.makeText(requireContext(),"Udało się, wiadomość: ${wynik[1] as String}",Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireContext(), getString(R.string.ToastSuccessfulyReceivedMsgIdentified) + (wynik[1] as String),Toast.LENGTH_LONG).show()
 
-                        val file = context?.getFileStreamPath("dane.txt")
-                        if( file == null || !file.exists() ) {
-                            // wiem że mogę w obu przypadkach dać append ale chcę mieć możliwość czyszczenia
-                            Log.d("Zapis","tworzę nowy plik")
-                            context?.openFileOutput("dane.txt", Context.MODE_PRIVATE).use {
-                                it?.write(   (   (wynik[1] as String)+"\n"    ).toByteArray())
+                        try {
+                            val file = context?.getFileStreamPath("dane.txt")
+                            if( file == null || !file.exists() ) {
+                                // wiem że mogę w obu przypadkach dać append ale chcę mieć możliwość czyszczenia
+                                Log.d("Zapis","tworzę nowy plik")
+                                context?.openFileOutput("dane.txt", Context.MODE_PRIVATE).use {
+                                    it?.write(   (   (wynik[1] as String)+"\n"    ).toByteArray())
+                                }
                             }
-                        }
-                        else {
-                            Log.d("Zapis","dopisuje do pliku")
-                            context?.openFileOutput("dane.txt", Context.MODE_APPEND + Context.MODE_PRIVATE).use {
-                                it?.write((wynik[1] as String).toByteArray())
+                            else {
+                                Log.d("Zapis","dopisuje do pliku")
+                                context?.openFileOutput("dane.txt", Context.MODE_APPEND + Context.MODE_PRIVATE).use {
+                                    it?.write((wynik[1] as String).toByteArray())
+                                }
                             }
-
+                        } catch (e: Exception) {
+                            Log.e("Error plikow", "Cos nie pyklo z plikami")
                         }
                     }
                 }
             }
             else {
                 Handler(Looper.getMainLooper()).post {
-                    Toast.makeText(requireContext(),"Nie udało się",Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(),R.string.ToastFailedReceiveMsg,Toast.LENGTH_LONG).show()
                 }
             }
 

@@ -41,4 +41,7 @@
     <string name="btnCommLocalDownloadConnect">Połącz z esp</string>
     <string name="btnCommLocalDownloadDownloadAll">Pobierz wszystkie dane</string>
     <string name="btnCommLocalDownloadDownloadNew">Pobierz nowe dane</string>
+    <string name="ToastFailedReceiveMsg">Nie udało się</string>
+    <string name="ToastSuccessfulyReceivedMsgUnidentified">Udało się, ale wiadomość nie została zidentyfikowana</string>
+    <string name="ToastSuccessfulyReceivedMsgIdentified">"Udało się, wiadomość: "</string>
 </resources>
