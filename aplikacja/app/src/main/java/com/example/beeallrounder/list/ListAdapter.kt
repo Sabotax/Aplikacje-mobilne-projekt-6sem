@@ -3,12 +3,10 @@ package com.example.beeallrounder.list
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.TextView
-import androidx.core.text.set
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beeallrounder.R
-import com.example.beeallrounder.data.Beehive_snapshot
+import com.example.beeallrounder.data.model.Beehive_snapshot
 
 class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 

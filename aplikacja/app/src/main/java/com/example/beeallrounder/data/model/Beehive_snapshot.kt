@@ -1,4 +1,4 @@
-package com.example.beeallrounder.data
+package com.example.beeallrounder.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -10,8 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beeallrounder.R
-import com.example.beeallrounder.data.UserDao
-import com.example.beeallrounder.data.UserViewModel
+import com.example.beeallrounder.data.viewmodel.UserViewModel
 import com.example.beeallrounder.list.ListAdapter
 
 // TODO: Rename parameter arguments, choose names that match

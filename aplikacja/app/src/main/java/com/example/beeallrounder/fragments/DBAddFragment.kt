@@ -1,7 +1,6 @@
 package com.example.beeallrounder.fragments
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
@@ -14,9 +13,8 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.beeallrounder.R
-import com.example.beeallrounder.data.Beehive_snapshot
-import com.example.beeallrounder.data.UserDao
-import com.example.beeallrounder.data.UserViewModel
+import com.example.beeallrounder.data.model.Beehive_snapshot
+import com.example.beeallrounder.data.viewmodel.UserViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

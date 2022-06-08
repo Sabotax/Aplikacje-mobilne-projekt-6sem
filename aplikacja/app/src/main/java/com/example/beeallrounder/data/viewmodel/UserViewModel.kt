@@ -1,9 +1,12 @@
-package com.example.beeallrounder.data
+package com.example.beeallrounder.data.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.example.beeallrounder.data.UserDatabase
+import com.example.beeallrounder.data.repository.UserRepository
+import com.example.beeallrounder.data.model.Beehive_snapshot
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

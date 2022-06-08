@@ -1,6 +1,8 @@
-package com.example.beeallrounder.data
+package com.example.beeallrounder.data.repository
 
 import androidx.lifecycle.LiveData
+import com.example.beeallrounder.data.UserDao
+import com.example.beeallrounder.data.model.Beehive_snapshot
 
 class UserRepository(private val userDao: UserDao) {
 
