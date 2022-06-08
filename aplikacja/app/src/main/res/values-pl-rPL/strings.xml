@@ -44,4 +44,5 @@
     <string name="ToastFailedReceiveMsg">Nie udało się</string>
     <string name="ToastSuccessfulyReceivedMsgUnidentified">Udało się, ale wiadomość nie została zidentyfikowana</string>
     <string name="ToastSuccessfulyReceivedMsgIdentified">"Udało się, wiadomość: "</string>
+    <string name="btnDBUpdateRecordSend">Zaktualizuj</string>
 </resources>

@@ -2,93 +2,93 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout3"
+    android:id="@+id/frameLayout7"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.DB.DBAddFragment">
+    tools:context="fragments.DB.DBUpdateFragment">
 
     <TextView
-        android:id="@+id/DBAddRadioGroupPierzgaText"
+        android:id="@+id/DBUpdateRadioGroupPierzgaText"
         android:layout_width="83dp"
         android:layout_height="48dp"
         android:text="@string/DBAddRadioGroupPierzgaText"
-        app:layout_constraintStart_toEndOf="@+id/DBAddRadioGroupPierzga"
-        app:layout_constraintTop_toTopOf="@+id/DBAddRadioGroupPierzga" />
+        app:layout_constraintStart_toEndOf="@+id/DBUpdateRadioGroupPierzga"
+        app:layout_constraintTop_toTopOf="@+id/DBUpdateRadioGroupPierzga" />
 
     <TextView
-        android:id="@+id/DBAddRadioGroupMiodZasklepionyText"
+        android:id="@+id/DBUpdateRadioGroupMiodZasklepionyText"
         android:layout_width="83dp"
         android:layout_height="48dp"
         android:text="@string/DBAddRadioGroupMiodZasklepionyText"
-        app:layout_constraintStart_toEndOf="@+id/DBAddRadioGroupMiodZasklepiony"
-        app:layout_constraintTop_toTopOf="@+id/DBAddRadioGroupMiodZasklepiony" />
+        app:layout_constraintStart_toEndOf="@+id/DBUpdateRadioGroupMiodZasklepiony"
+        app:layout_constraintTop_toTopOf="@+id/DBUpdateRadioGroupMiodZasklepiony" />
 
     <TextView
-        android:id="@+id/DBAddRadioGroupNakropText"
+        android:id="@+id/DBUpdateRadioGroupNakropText"
         android:layout_width="83dp"
         android:layout_height="48dp"
         android:text="@string/DBAddRadioGroupNakropText"
-        app:layout_constraintStart_toEndOf="@+id/DBAddRadioGroupNakrop"
-        app:layout_constraintTop_toTopOf="@+id/DBAddRadioGroupNakrop" />
+        app:layout_constraintStart_toEndOf="@+id/DBUpdateRadioGroupNakrop"
+        app:layout_constraintTop_toTopOf="@+id/DBUpdateRadioGroupNakrop" />
 
     <TextView
-        android:id="@+id/DBAddRadioGroupCzerwOtwartyText"
+        android:id="@+id/DBUpdateRadioGroupCzerwOtwartyText"
         android:layout_width="83dp"
         android:layout_height="48dp"
         android:text="@string/DBAddRadioGroupCzerwOtwartyText"
-        app:layout_constraintStart_toEndOf="@+id/DBAddRadioGroupCzerwOtwarty"
-        app:layout_constraintTop_toTopOf="@+id/DBAddRadioGroupCzerwOtwarty" />
+        app:layout_constraintStart_toEndOf="@+id/DBUpdateRadioGroupCzerwOtwarty"
+        app:layout_constraintTop_toTopOf="@+id/DBUpdateRadioGroupCzerwOtwarty" />
 
     <TextView
-        android:id="@+id/DBAddRadioGroupCzerwZasklepionyText"
+        android:id="@+id/DBUpdateRadioGroupCzerwZasklepionyText"
         android:layout_width="83dp"
         android:layout_height="48dp"
         android:text="@string/DBAddRadioGroupCzerwZasklepionyText"
-        app:layout_constraintStart_toEndOf="@+id/DBAddRadioGroupCzerwZasklepiony"
-        app:layout_constraintTop_toTopOf="@+id/DBAddRadioGroupCzerwZasklepiony" />
+        app:layout_constraintStart_toEndOf="@+id/DBUpdateRadioGroupCzerwZasklepiony"
+        app:layout_constraintTop_toTopOf="@+id/DBUpdateRadioGroupCzerwZasklepiony" />
 
     <TextView
-        android:id="@+id/DBAddRadioGroupCzerwTrutowyText"
+        android:id="@+id/DBUpdateRadioGroupCzerwTrutowyText"
         android:layout_width="83dp"
         android:layout_height="48dp"
         android:text="@string/DBAddRadioGroupCzerwTrutowyText"
-        app:layout_constraintStart_toEndOf="@+id/DBAddRadioGroupCzerwTrutowy"
-        app:layout_constraintTop_toTopOf="@+id/DBAddRadioGroupCzerwTrutowy" />
+        app:layout_constraintStart_toEndOf="@+id/DBUpdateRadioGroupCzerwTrutowy"
+        app:layout_constraintTop_toTopOf="@+id/DBUpdateRadioGroupCzerwTrutowy" />
 
     <EditText
-        android:id="@+id/DBAddileTextRamekZWezaEdit"
+        android:id="@+id/DBUpdateileTextRamekZWezaEdit"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:ems="10"
         android:inputType="numberDecimal"
         android:visibility="visible"
-        app:layout_constraintStart_toEndOf="@+id/DBAddileTextRamekZMiodemText"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddileTextRamekZPierzgaEdit"
+        app:layout_constraintStart_toEndOf="@+id/DBUpdateileTextRamekZMiodemText"
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateileTextRamekZPierzgaEdit"
         tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <Button
-        android:id="@+id/btnDBAddRecordSend"
+        android:id="@+id/btnDBUpdateRecordSend"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="136dp"
-        android:text="@string/btnDBAddRecordSend"
+        android:text="@string/btnDBUpdateRecordSend"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddileTextRamekZMiodemEdit" />
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateileTextRamekZMiodemEdit" />
 
     <EditText
-        android:id="@+id/DBAddDateEdit"
+        android:id="@+id/DBUpdateDateEdit"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:ems="10"
         android:inputType="date"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddDateText"
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateDateText"
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <TextView
-        android:id="@+id/DBAddDateText"
+        android:id="@+id/DBUpdateDateText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
@@ -98,18 +98,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/DBAddMainNumberEdit"
+        android:id="@+id/DBUpdateMainNumberEdit"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginEnd="36dp"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddMainNumberText"
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateMainNumberText"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
-        android:id="@+id/DBAddZachowanieText"
+        android:id="@+id/DBUpdateZachowanieText"
         android:layout_width="110dp"
         android:layout_height="30dp"
         android:layout_marginTop="24dp"
@@ -117,10 +117,10 @@
         android:text="@string/radioGroupDBAddZachowanie"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddMainNumberEdit" />
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateMainNumberEdit" />
 
     <TextView
-        android:id="@+id/DBAddMainNumberText"
+        android:id="@+id/DBUpdateMainNumberText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -130,170 +130,170 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <RadioGroup
-        android:id="@+id/DBAddRadioGroupJajeczka"
+        android:id="@+id/DBUpdateRadioGroupJajeczka"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddTakText">
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateTakText">
 
         <RadioButton
-            android:id="@+id/DBAddRadioGroupJajeczkaRadioYes"
+            android:id="@+id/DBUpdateRadioGroupJajeczkaRadioYes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <RadioButton
-            android:id="@+id/DBAddRadioGroupJajeczkaRadioNo"
+            android:id="@+id/DBUpdateRadioGroupJajeczkaRadioNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
     </RadioGroup>
 
     <RadioGroup
-        android:id="@+id/DBAddRadioGroupCzerwOtwarty"
+        android:id="@+id/DBUpdateRadioGroupCzerwOtwarty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="@+id/DBAddRadioGroupJajeczka"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddRadioGroupJajeczka">
+        app:layout_constraintStart_toStartOf="@+id/DBUpdateRadioGroupJajeczka"
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateRadioGroupJajeczka">
 
         <RadioButton
-            android:id="@+id/DBAddRadioGroupCzerwOtwartyRadioYes"
+            android:id="@+id/DBUpdateRadioGroupCzerwOtwartyRadioYes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <RadioButton
-            android:id="@+id/DBAddRadioGroupCzerwOtwartyRadioNo"
+            android:id="@+id/DBUpdateRadioGroupCzerwOtwartyRadioNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
     </RadioGroup>
 
     <RadioGroup
-        android:id="@+id/DBAddRadioGroupCzerwZasklepiony"
+        android:id="@+id/DBUpdateRadioGroupCzerwZasklepiony"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="@+id/DBAddRadioGroupCzerwOtwarty"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddRadioGroupCzerwOtwarty">
+        app:layout_constraintStart_toStartOf="@+id/DBUpdateRadioGroupCzerwOtwarty"
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateRadioGroupCzerwOtwarty">
 
         <RadioButton
-            android:id="@+id/DBAddRadioGroupCzerwZasklepionyRadioYes"
+            android:id="@+id/DBUpdateRadioGroupCzerwZasklepionyRadioYes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <RadioButton
-            android:id="@+id/DBAddRadioGroupCzerwZasklepionyRadioNo"
+            android:id="@+id/DBUpdateRadioGroupCzerwZasklepionyRadioNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
     </RadioGroup>
 
     <RadioGroup
-        android:id="@+id/DBAddRadioGroupCzerwTrutowy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="@+id/DBAddRadioGroupCzerwZasklepiony"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddRadioGroupCzerwZasklepiony">
-
-        <RadioButton
-            android:id="@+id/DBAddRadioGroupCzerwTrutowyRadioYes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <RadioButton
-            android:id="@+id/DBAddRadioGroupCzerwTrutowyRadioNo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </RadioGroup>
-
-    <RadioGroup
-        android:id="@+id/DBAddRadioGroupNakrop"
+        android:id="@+id/DBUpdateRadioGroupCzerwTrutowy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="@+id/DBAddRadioGroupCzerwTrutowy"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddRadioGroupCzerwTrutowy">
+        app:layout_constraintStart_toStartOf="@+id/DBUpdateRadioGroupCzerwZasklepiony"
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateRadioGroupCzerwZasklepiony">
 
         <RadioButton
-            android:id="@+id/DBAddRadioGroupNakropRadioYes"
+            android:id="@+id/DBUpdateRadioGroupCzerwTrutowyRadioYes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <RadioButton
-            android:id="@+id/DBAddRadioGroupNakropRadioNo"
+            android:id="@+id/DBUpdateRadioGroupCzerwTrutowyRadioNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
     </RadioGroup>
 
     <RadioGroup
-        android:id="@+id/DBAddRadioGroupMiodZasklepiony"
+        android:id="@+id/DBUpdateRadioGroupNakrop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="@+id/DBAddRadioGroupNakrop"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddRadioGroupNakrop">
+        app:layout_constraintStart_toStartOf="@+id/DBUpdateRadioGroupCzerwTrutowy"
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateRadioGroupCzerwTrutowy">
 
         <RadioButton
-            android:id="@+id/DBAddRadioGroupMiodZasklepionyRadioYes"
+            android:id="@+id/DBUpdateRadioGroupNakropRadioYes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <RadioButton
-            android:id="@+id/DBAddRadioGroupMiodZasklepionyRadioNo"
+            android:id="@+id/DBUpdateRadioGroupNakropRadioNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
     </RadioGroup>
 
     <RadioGroup
-        android:id="@+id/DBAddRadioGroupPierzga"
+        android:id="@+id/DBUpdateRadioGroupMiodZasklepiony"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="@+id/DBAddRadioGroupMiodZasklepiony"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddRadioGroupMiodZasklepiony">
+        app:layout_constraintStart_toStartOf="@+id/DBUpdateRadioGroupNakrop"
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateRadioGroupNakrop">
 
         <RadioButton
-            android:id="@+id/DBAddRadioGroupPierzgaRadioYes"
+            android:id="@+id/DBUpdateRadioGroupMiodZasklepionyRadioYes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <RadioButton
-            android:id="@+id/DBAddRadioGroupPierzgaRadioNo"
+            android:id="@+id/DBUpdateRadioGroupMiodZasklepionyRadioNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/DBUpdateRadioGroupPierzga"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@+id/DBUpdateRadioGroupMiodZasklepiony"
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateRadioGroupMiodZasklepiony">
+
+        <RadioButton
+            android:id="@+id/DBUpdateRadioGroupPierzgaRadioYes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <RadioButton
+            android:id="@+id/DBUpdateRadioGroupPierzgaRadioNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
     </RadioGroup>
 
     <TextView
-        android:id="@+id/DBAddNoText"
+        android:id="@+id/DBUpdateNoText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:text="@string/radioDBAddNo"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/DBAddTakText"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddDateEdit" />
+        app:layout_constraintStart_toEndOf="@+id/DBUpdateTakText"
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateDateEdit" />
 
     <TextView
-        android:id="@+id/DBAddTakText"
+        android:id="@+id/DBUpdateTakText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -301,21 +301,21 @@
         android:text="@string/radioDBAddYes"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddDateEdit" />
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateDateEdit" />
 
     <RadioGroup
-        android:id="@+id/DBAddRadioGroupZachowanie"
+        android:id="@+id/DBUpdateRadioGroupZachowanie"
         android:layout_width="210dp"
         android:layout_height="75dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="14dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/DBAddRadioGroupCzerwOtwartyText"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddZachowanieText">
+        app:layout_constraintStart_toEndOf="@+id/DBUpdateRadioGroupCzerwOtwartyText"
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateZachowanieText">
 
         <RadioButton
-            android:id="@+id/DBAddRadioGroupZachowanieRadioSpokojne"
+            android:id="@+id/DBUpdateRadioGroupZachowanieRadioSpokojne"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -325,7 +325,7 @@
             android:text="@string/radioGroupDBAddSpokojne" />
 
         <RadioButton
-            android:id="@+id/DBAddRadioGroupZachowanieRadioNerwowe"
+            android:id="@+id/DBUpdateRadioGroupZachowanieRadioNerwowe"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -334,7 +334,7 @@
             android:text="@string/radioGroupDBAddNerwowe" />
 
         <RadioButton
-            android:id="@+id/DBAddRadioGroupZachowanieRadioAgresywne"
+            android:id="@+id/DBUpdateRadioGroupZachowanieRadioAgresywne"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -344,18 +344,18 @@
     </RadioGroup>
 
     <RadioGroup
-        android:id="@+id/DBAddRadioGroupSila"
+        android:id="@+id/DBUpdateRadioGroupSila"
         android:layout_width="210dp"
         android:layout_height="75dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="14dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/DBAddRadioGroupZachowanie"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddSilaText">
+        app:layout_constraintStart_toStartOf="@+id/DBUpdateRadioGroupZachowanie"
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateSilaText">
 
         <RadioButton
-            android:id="@+id/DBAddRadioGroupZachowanieSilaSlaba"
+            android:id="@+id/DBUpdateRadioGroupZachowanieSilaSlaba"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -365,7 +365,7 @@
             android:text="@string/radioGroupDBAddSlabe" />
 
         <RadioButton
-            android:id="@+id/DBAddRadioGroupZachowanieSilaSrednia"
+            android:id="@+id/DBUpdateRadioGroupZachowanieSilaSrednia"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -374,7 +374,7 @@
             android:text="@string/radioGroupDBAddSrednia" />
 
         <RadioButton
-            android:id="@+id/DBAddRadioGroupZachowanieSilaSilna"
+            android:id="@+id/DBUpdateRadioGroupZachowanieSilaSilna"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -384,7 +384,7 @@
     </RadioGroup>
 
     <TextView
-        android:id="@+id/DBAddSilaText"
+        android:id="@+id/DBUpdateSilaText"
         android:layout_width="110dp"
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
@@ -392,10 +392,10 @@
         android:text="@string/radioGroupDBAddSila"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddRadioGroupZachowanie" />
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateRadioGroupZachowanie" />
 
     <TextView
-        android:id="@+id/DBAddileText"
+        android:id="@+id/DBUpdateileText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -403,125 +403,125 @@
         android:text="@string/DBAddileText"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddRadioGroupSila" />
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateRadioGroupSila" />
 
     <EditText
-        android:id="@+id/DBAddileKorpusowEdit"
+        android:id="@+id/DBUpdateileKorpusowEdit"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:ems="10"
         android:inputType="numberDecimal"
         android:visibility="visible"
-        app:layout_constraintStart_toStartOf="@+id/DBAddileRamekEdit"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddileRamekEdit" />
+        app:layout_constraintStart_toStartOf="@+id/DBUpdateileRamekEdit"
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateileRamekEdit" />
 
     <EditText
-        android:id="@+id/DBAddileTextRamekZMiodemEdit"
+        android:id="@+id/DBUpdateileTextRamekZMiodemEdit"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:ems="10"
         android:inputType="numberDecimal"
         android:visibility="visible"
-        app:layout_constraintStart_toStartOf="@+id/DBAddileRamekEdit"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddileKorpusowEdit" />
+        app:layout_constraintStart_toStartOf="@+id/DBUpdateileRamekEdit"
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateileKorpusowEdit" />
 
     <EditText
-        android:id="@+id/DBAddileRamekEdit"
+        android:id="@+id/DBUpdateileRamekEdit"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:ems="10"
         android:inputType="numberDecimal"
         android:visibility="visible"
-        app:layout_constraintStart_toStartOf="@+id/DBAddileText"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddileText" />
+        app:layout_constraintStart_toStartOf="@+id/DBUpdateileText"
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateileText" />
 
     <EditText
-        android:id="@+id/DBAddileTextRamekZCzerwiemEdit"
+        android:id="@+id/DBUpdateileTextRamekZCzerwiemEdit"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:ems="10"
         android:inputType="numberDecimal"
         android:visibility="visible"
-        app:layout_constraintStart_toEndOf="@+id/DBAddileRamekText"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddileText" />
+        app:layout_constraintStart_toEndOf="@+id/DBUpdateileRamekText"
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateileText" />
 
     <EditText
-        android:id="@+id/DBAddileTextRamekZPierzgaEdit"
+        android:id="@+id/DBUpdateileTextRamekZPierzgaEdit"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:ems="10"
         android:inputType="numberDecimal"
         android:visibility="visible"
-        app:layout_constraintStart_toEndOf="@+id/DBAddileKorpusowText"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddileTextRamekZCzerwiemEdit" />
+        app:layout_constraintStart_toEndOf="@+id/DBUpdateileKorpusowText"
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateileTextRamekZCzerwiemEdit" />
 
     <TextView
-        android:id="@+id/DBAddileRamekText"
+        android:id="@+id/DBUpdateileRamekText"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:text="@string/DBAddileRamekText"
         android:visibility="visible"
-        app:layout_constraintStart_toEndOf="@+id/DBAddileRamekEdit"
-        app:layout_constraintTop_toTopOf="@+id/DBAddileRamekEdit" />
+        app:layout_constraintStart_toEndOf="@+id/DBUpdateileRamekEdit"
+        app:layout_constraintTop_toTopOf="@+id/DBUpdateileRamekEdit" />
 
     <TextView
-        android:id="@+id/DBAddileKorpusowText"
+        android:id="@+id/DBUpdateileKorpusowText"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:text="@string/DBAddileKorpusowText"
         android:visibility="visible"
-        app:layout_constraintStart_toEndOf="@+id/DBAddileKorpusowEdit"
-        app:layout_constraintTop_toTopOf="@+id/DBAddileKorpusowEdit" />
+        app:layout_constraintStart_toEndOf="@+id/DBUpdateileKorpusowEdit"
+        app:layout_constraintTop_toTopOf="@+id/DBUpdateileKorpusowEdit" />
 
     <TextView
-        android:id="@+id/DBAddileTextRamekZMiodemText"
+        android:id="@+id/DBUpdateileTextRamekZMiodemText"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:text="@string/DBAddileRamekZMiodemText"
         android:visibility="visible"
-        app:layout_constraintStart_toEndOf="@+id/DBAddileTextRamekZMiodemEdit"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddileKorpusowEdit" />
+        app:layout_constraintStart_toEndOf="@+id/DBUpdateileTextRamekZMiodemEdit"
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateileKorpusowEdit" />
 
     <TextView
-        android:id="@+id/DBAddileTextRamekZCzerwiemText"
+        android:id="@+id/DBUpdateileTextRamekZCzerwiemText"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:text="@string/DBAddileRamekZCzerwiemText"
         android:visibility="visible"
-        app:layout_constraintStart_toEndOf="@+id/DBAddileTextRamekZCzerwiemEdit"
-        app:layout_constraintTop_toTopOf="@+id/DBAddileTextRamekZCzerwiemEdit" />
+        app:layout_constraintStart_toEndOf="@+id/DBUpdateileTextRamekZCzerwiemEdit"
+        app:layout_constraintTop_toTopOf="@+id/DBUpdateileTextRamekZCzerwiemEdit" />
 
     <TextView
-        android:id="@+id/DBAddileTextRamekZPierzgaText"
+        android:id="@+id/DBUpdateileTextRamekZPierzgaText"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:text="@string/DBAddileRamekZPierzgaText"
         android:visibility="visible"
-        app:layout_constraintStart_toEndOf="@+id/DBAddileTextRamekZPierzgaEdit"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddileTextRamekZCzerwiemEdit" />
+        app:layout_constraintStart_toEndOf="@+id/DBUpdateileTextRamekZPierzgaEdit"
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateileTextRamekZCzerwiemEdit" />
 
     <TextView
-        android:id="@+id/DBAddileTextRamekZWezaText"
+        android:id="@+id/DBUpdateileTextRamekZWezaText"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:text="@string/DBAddileRamekZWezaText"
         android:visibility="visible"
-        app:layout_constraintStart_toEndOf="@+id/DBAddileTextRamekZWezaEdit"
-        app:layout_constraintTop_toTopOf="@+id/DBAddileTextRamekZWezaEdit" />
+        app:layout_constraintStart_toEndOf="@+id/DBUpdateileTextRamekZWezaEdit"
+        app:layout_constraintTop_toTopOf="@+id/DBUpdateileTextRamekZWezaEdit" />
 
     <TextView
-        android:id="@+id/DBAddNotatkiText"
+        android:id="@+id/DBUpdateNotatkiText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:layout_marginTop="20dp"
         android:text="@string/DBAddNotatkiText"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/DBAddRadioGroupNakrop"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddRadioGroupSila" />
+        app:layout_constraintStart_toEndOf="@+id/DBUpdateRadioGroupNakrop"
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateRadioGroupSila" />
 
     <EditText
-        android:id="@+id/DBAddNotatkiEdit"
+        android:id="@+id/DBUpdateNotatkiEdit"
         android:layout_width="133dp"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
@@ -532,27 +532,27 @@
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/DBAddNotatkiText"
-        app:layout_constraintTop_toBottomOf="@+id/DBAddNotatkiText"
+        app:layout_constraintStart_toStartOf="@+id/DBUpdateNotatkiText"
+        app:layout_constraintTop_toBottomOf="@+id/DBUpdateNotatkiText"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
-        android:id="@+id/DBAddRadioGroupJajeczkaText"
+        android:id="@+id/DBUpdateRadioGroupJajeczkaText"
         android:layout_width="83dp"
         android:layout_height="48dp"
         android:text="@string/DBAddRadioGroupJajeczkaText"
-        app:layout_constraintStart_toEndOf="@+id/DBAddRadioGroupJajeczka"
-        app:layout_constraintTop_toTopOf="@+id/DBAddRadioGroupJajeczka" />
+        app:layout_constraintStart_toEndOf="@+id/DBUpdateRadioGroupJajeczka"
+        app:layout_constraintTop_toTopOf="@+id/DBUpdateRadioGroupJajeczka" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
+        android:id="@+id/guideline7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="9dp" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
+        android:id="@+id/guideline8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"

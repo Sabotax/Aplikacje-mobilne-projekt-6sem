@@ -1,4 +1,4 @@
-package com.example.beeallrounder.fragments
+package com.example.beeallrounder.fragments.DB
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -90,7 +90,7 @@ class DBAddFragment : Fragment() {
                 val snapshot = Beehive_snapshot(0,date,hiveNumber,notes)
                 mUserViewModel.addBeehive(snapshot)
                 Toast.makeText(requireContext(),R.string.ToastSuccessfulyAddedSnapshot,Toast.LENGTH_LONG).show()
-                findNavController().navigate(R.id.action_DBAddFragment_to_DBMainFragment)
+                findNavController().navigate(R.id.action_DBAddFragment_to_DBListFragment)
             }
 
             builder.setNegativeButton(android.R.string.no) { dialog, which ->

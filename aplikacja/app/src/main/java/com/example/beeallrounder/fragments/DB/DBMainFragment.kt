@@ -1,17 +1,13 @@
-package com.example.beeallrounder.fragments
+package com.example.beeallrounder.fragments.DB
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.Button
+import androidx.navigation.Navigation
 import com.example.beeallrounder.R
-import com.example.beeallrounder.data.viewmodel.UserViewModel
-import com.example.beeallrounder.list.ListAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,12 +16,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [DBListFragment.newInstance] factory method to
+ * Use the [DBMainFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class DBListFragment : Fragment() {
-
-    private lateinit var mUserViewModel : UserViewModel
+class DBMainFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -43,21 +37,16 @@ class DBListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_d_b_list, container, false)
+        return inflater.inflate(R.layout.fragment_d_b_main, container, false)
+    }
 
-        //recycler view
-        val adapter = ListAdapter()
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        // user view model
-        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        mUserViewModel.readAllData.observe(viewLifecycleOwner, Observer {
-            user -> adapter.setData(user)
-       })
-
-        return view
+        val btnDBMainToDBList = view.findViewById<Button>(R.id.btnDBMainToDBList)
+        btnDBMainToDBList.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_DBMainFragment_to_DBListFragment)
+        }
     }
 
     companion object {
@@ -67,12 +56,12 @@ class DBListFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment DBListFragment.
+         * @return A new instance of fragment DBMainFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            DBListFragment().apply {
+            DBMainFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

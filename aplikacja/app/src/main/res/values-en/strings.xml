@@ -44,4 +44,5 @@
     <string name="ToastFailedReceiveMsg">Connection failed</string>
     <string name="ToastSuccessfulyReceivedMsgUnidentified">Connection successful, but message couldn\'t be identified</string>
     <string name="ToastSuccessfulyReceivedMsgIdentified">"Connection successful, message: "</string>
+    <string name="btnDBUpdateRecordSend">Update</string>
 </resources>

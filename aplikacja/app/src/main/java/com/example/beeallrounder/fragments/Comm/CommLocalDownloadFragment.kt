@@ -1,4 +1,4 @@
-package com.example.beeallrounder.fragments
+package com.example.beeallrounder.fragments.Comm
 
 import android.content.Context
 import android.os.Bundle

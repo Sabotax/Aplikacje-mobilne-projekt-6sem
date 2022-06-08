@@ -1,7 +1,7 @@
 package com.example.beeallrounder.LocalComm
 
 import android.util.Log
-import com.example.beeallrounder.fragments.CommLocalDownloadFragment
+import com.example.beeallrounder.fragments.Comm.CommLocalDownloadFragment
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.PrintWriter
