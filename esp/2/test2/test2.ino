@@ -24,11 +24,11 @@ void handleNotFound() {
 }
 
 void handleCommDownloadAll() {
-  String odpowiedz = "Pozdrawiam z esp, moj czas od wlaczenia: " + String(millis());
+  String odpowiedz = "MSG:Pozdrawiam z esp, moj czas od wlaczenia: " + String(millis());
   char odpowiedz_downgrade[odpowiedz.length()];
   odpowiedz.toCharArray(odpowiedz_downgrade,odpowiedz.length());
 
-  server.send(200, odpowiedz_downgrade);
+  server.send(200, "text/plain" ,odpowiedz_downgrade);
   Serial.println(odpowiedz_downgrade);
 }
 
