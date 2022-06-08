@@ -15,4 +15,12 @@ class UserRepository(private val userDao: UserDao) {
     suspend fun updateRecord(beehiveSnapshot: Beehive_snapshot) {
         userDao.updateRecord(beehiveSnapshot)
     }
+
+    suspend fun deleteRecord(beehiveSnapshot: Beehive_snapshot) {
+        userDao.deleteRecord(beehiveSnapshot)
+    }
+
+    suspend fun deleteAllRecord() {
+        userDao.deleteAllRecords()
+    }
 }

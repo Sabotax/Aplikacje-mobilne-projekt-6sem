@@ -3,10 +3,8 @@ package com.example.beeallrounder.fragments.DB
 import android.app.AlertDialog
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -41,6 +39,10 @@ class DBUpdateFragment : Fragment() {
             updateItem()
         }
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+
+        // add menu
+        setHasOptionsMenu(true)
+
         return view
     }
 
@@ -81,4 +83,29 @@ class DBUpdateFragment : Fragment() {
         return !(TextUtils.isEmpty(date) || TextUtils.isEmpty(hiveNumber) || TextUtils.isEmpty(date))
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.delete_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.menu_delete) {
+            deleteSnapshot()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun deleteSnapshot() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setPositiveButton("Yes") { _, _  ->
+            mUserViewModel.deleteRecord(args.currentSnapshot)
+            Toast.makeText(requireContext(),"Successfully removed hive ${args.currentSnapshot.hiveNumber}",Toast.LENGTH_LONG).show()
+            findNavController().navigate(R.id.action_DBUpdateFragment_to_DBListFragment)
+        }
+        builder.setNegativeButton("No") { _, _  ->
+            //nothing
+        }
+        builder.setTitle("Delete hive ${args.currentSnapshot.hiveNumber}?")
+        builder.setMessage("Are you sure you want to delete hive ${args.currentSnapshot.hiveNumber}?")
+        builder.create().show()
+    }
 }

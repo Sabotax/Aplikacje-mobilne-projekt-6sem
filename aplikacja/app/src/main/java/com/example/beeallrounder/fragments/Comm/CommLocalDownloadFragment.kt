@@ -69,6 +69,9 @@ class CommLocalDownloadFragment : Fragment() {
 
     private fun downloadAll() {
         CoroutineScope(Dispatchers.Default).launch {
+            Handler(Looper.getMainLooper()).post {
+                Toast.makeText(requireContext(),"Starting",Toast.LENGTH_SHORT).show()
+            }
             val wynik = TcpClient.DownloadAll()
             if(wynik[0] as Boolean) {
                 Handler(Looper.getMainLooper()).post {

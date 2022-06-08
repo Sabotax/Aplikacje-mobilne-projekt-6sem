@@ -1,14 +1,15 @@
 package com.example.beeallrounder.fragments.DB
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beeallrounder.R
@@ -60,6 +61,8 @@ class DBListFragment : Fragment() {
             user -> adapter.setData(user)
        })
 
+        setHasOptionsMenu(true)
+
         return view
     }
 
@@ -90,5 +93,32 @@ class DBListFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.delete_menu,menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.menu_delete) {
+            deleteAllRecords()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun deleteAllRecords() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setPositiveButton("Yes") { _, _  ->
+            mUserViewModel.deleteAllRecords()
+            Toast.makeText(requireContext(),"Successfully removed all records",
+                Toast.LENGTH_LONG).show()
+
+        }
+        builder.setNegativeButton("No") { _, _  ->
+            //nothing
+        }
+        builder.setTitle("Delete all records?")
+        builder.setMessage("Are you sure you want to delete all records?")
+        builder.create().show()
     }
 }

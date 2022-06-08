@@ -32,4 +32,16 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
             repository.updateRecord(beehiveSnapshot)
         }
     }
+
+    fun deleteRecord(beehiveSnapshot: Beehive_snapshot) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteRecord(beehiveSnapshot)
+        }
+    }
+
+    fun deleteAllRecords() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAllRecord()
+        }
+    }
 }

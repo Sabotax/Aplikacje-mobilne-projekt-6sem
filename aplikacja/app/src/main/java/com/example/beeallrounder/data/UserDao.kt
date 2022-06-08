@@ -15,4 +15,10 @@ interface UserDao {
 
     @Update
     suspend fun updateRecord(beehiveSnapshot: Beehive_snapshot)
+
+    @Delete
+    suspend fun deleteRecord(beehiveSnapshot: Beehive_snapshot)
+
+    @Query("DELETE FROM Beehive_snapshot")
+    suspend fun deleteAllRecords()
 }

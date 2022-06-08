@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="24.10.2022"
-        android:textSize="16sp"
+        android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@+id/recyclerRowIDText"
         app:layout_constraintStart_toEndOf="@+id/recyclerRowIDText"
         app:layout_constraintTop_toTopOf="@+id/recyclerRowIDText" />
@@ -34,7 +34,7 @@
         android:layout_marginStart="28dp"
         android:layout_marginEnd="20dp"
         android:text="A"
-        android:textSize="16sp"
+        android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@+id/recyclerRowIDText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recyclerRowNumberText"
