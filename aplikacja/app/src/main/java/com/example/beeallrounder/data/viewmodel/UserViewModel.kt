@@ -26,4 +26,10 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
             repository.addBeehive(snapshot)
         }
     }
+
+    fun updateRecord(beehiveSnapshot: Beehive_snapshot) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateRecord(beehiveSnapshot)
+        }
+    }
 }

@@ -4,9 +4,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.fragment.app.ListFragment
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beeallrounder.R
 import com.example.beeallrounder.data.model.Beehive_snapshot
+import com.example.beeallrounder.fragments.DB.DBListFragment
+import com.example.beeallrounder.fragments.DB.DBListFragmentDirections
+import kotlin.math.acos
 
 class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
@@ -26,6 +35,11 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         holder.itemView.findViewById<TextView>(R.id.recyclerRowDateText).text = currentItem.date
         holder.itemView.findViewById<TextView>(R.id.recyclerRowNumberText).text = currentItem.hiveNumber.toString()
         holder.itemView.findViewById<TextView>(R.id.recyclerRowNotesText).text = currentItem.notes
+
+        holder.itemView.findViewById<ConstraintLayout>(R.id.rowLayout).setOnClickListener {
+            val action = DBListFragmentDirections.actionDBListFragmentToDBUpdateFragment(currentItem)
+            holder.itemView.findNavController().navigate(action)
+        }
     }
 
     fun setData(snap : List<Beehive_snapshot>) {

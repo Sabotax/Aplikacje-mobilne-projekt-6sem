@@ -11,4 +11,8 @@ class UserRepository(private val userDao: UserDao) {
     suspend fun addBeehive(snapshot: Beehive_snapshot) {
         userDao.addRecord(snapshot)
     }
+
+    suspend fun updateRecord(beehiveSnapshot: Beehive_snapshot) {
+        userDao.updateRecord(beehiveSnapshot)
+    }
 }

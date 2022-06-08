@@ -11,11 +11,15 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.beeallrounder.LocalComm.TcpClient
 import com.example.beeallrounder.R
+import com.example.beeallrounder.data.model.Beehive_snapshot
+import com.example.beeallrounder.data.viewmodel.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -33,6 +37,8 @@ class CommLocalDownloadFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private lateinit var mUserViewModel: UserViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -46,6 +52,7 @@ class CommLocalDownloadFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         return inflater.inflate(R.layout.fragment_comm_local_download, container, false)
     }
 
@@ -70,7 +77,7 @@ class CommLocalDownloadFragment : Fragment() {
                     }
                     else {
                         Toast.makeText(requireContext(), getString(R.string.ToastSuccessfulyReceivedMsgIdentified) + (wynik[1] as String),Toast.LENGTH_LONG).show()
-
+                        addToDB(wynik[1] as String)
                         try {
                             val file = context?.getFileStreamPath("dane.txt")
                             if( file == null || !file.exists() ) {
@@ -100,6 +107,12 @@ class CommLocalDownloadFragment : Fragment() {
 
         }
 
+    }
+
+    private fun addToDB(czas: String) {
+        val now = Calendar.getInstance().getTime();
+        val snapshot = Beehive_snapshot(0,now.toString(),1,czas)
+        mUserViewModel.addBeehive(snapshot)
     }
 
 
