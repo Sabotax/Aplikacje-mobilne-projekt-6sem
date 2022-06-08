@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,8 @@ import com.example.beeallrounder.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -71,8 +74,20 @@ class CommLocalDownloadFragment : Fragment() {
                     else {
                         Toast.makeText(requireContext(),"Udało się, wiadomość: ${wynik[1] as String}",Toast.LENGTH_LONG).show()
 
-                        context?.openFileOutput("dane.txt", Context.MODE_PRIVATE).use {
-                            it?.write((wynik[1] as String).toByteArray())
+                        val file = context?.getFileStreamPath("dane.txt")
+                        if( file == null || !file.exists() ) {
+                            // wiem że mogę w obu przypadkach dać append ale chcę mieć możliwość czyszczenia
+                            Log.d("Zapis","tworzę nowy plik")
+                            context?.openFileOutput("dane.txt", Context.MODE_PRIVATE).use {
+                                it?.write(   (   (wynik[1] as String)+"\n"    ).toByteArray())
+                            }
+                        }
+                        else {
+                            Log.d("Zapis","dopisuje do pliku")
+                            context?.openFileOutput("dane.txt", Context.MODE_APPEND + Context.MODE_PRIVATE).use {
+                                it?.write((wynik[1] as String).toByteArray())
+                            }
+
                         }
                     }
                 }
