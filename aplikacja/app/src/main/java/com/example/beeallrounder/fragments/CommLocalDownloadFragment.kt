@@ -1,17 +1,21 @@
 package com.example.beeallrounder.fragments
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.beeallrounder.LocalComm.TcpClient
 import com.example.beeallrounder.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.concurrent.thread
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -56,9 +60,33 @@ class CommLocalDownloadFragment : Fragment() {
     }
 
     private fun connectTcp() {
-        //thread( start = true, block= { TcpClient.client() }, name = "TcpClientThread1")
-        CoroutineScope(Dispatchers.Default).launch { TcpClient.client() }
+        CoroutineScope(Dispatchers.Default).launch {
+            val wynik = TcpClient.DownloadAll()
+            if(wynik[0] as Boolean) {
+                // TODO udalo sie wiadomosc wycieta + save
+                Handler(Looper.getMainLooper()).post {
+                    if (wynik[1] == null) {
+                        Toast.makeText(requireContext(),"Udało się, ale wiadomość nie została zidentyfikowana",Toast.LENGTH_LONG).show()
+                    }
+                    else {
+                        Toast.makeText(requireContext(),"Udało się, wiadomość: ${wynik[1] as String}",Toast.LENGTH_LONG).show()
+
+                        context?.openFileOutput("dane.txt", Context.MODE_PRIVATE).use {
+                            it?.write((wynik[1] as String).toByteArray())
+                        }
+                    }
+                }
+            }
+            else {
+                Handler(Looper.getMainLooper()).post {
+                    Toast.makeText(requireContext(),"Nie udało się",Toast.LENGTH_LONG).show()
+                }
+            }
+
+        }
+
     }
+
 
     companion object {
         /**
@@ -69,6 +97,7 @@ class CommLocalDownloadFragment : Fragment() {
          * @param param2 Parameter 2.
          * @return A new instance of fragment commLocalDownloadFragment.
          */
+
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =

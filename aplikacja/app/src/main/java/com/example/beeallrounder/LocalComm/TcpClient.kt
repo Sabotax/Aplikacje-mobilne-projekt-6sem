@@ -1,18 +1,21 @@
 package com.example.beeallrounder.LocalComm
 
 import android.util.Log
+import com.example.beeallrounder.fragments.CommLocalDownloadFragment
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.PrintWriter
+import java.net.ConnectException
 import java.net.ServerSocket
 import java.net.Socket
+import java.net.SocketException
 
 class TcpClient private constructor() {
     companion object {
         private const val SERVER_IP = "192.168.0.1"
         private const val SERVER_PORT = 80
 
-        fun client() {
+        fun DownloadAll() : Array<Any?> {
             // java.net.SocketException: connection reset pid 6817 - gdy zle wifi
             // java.net.ConnectException: failed to connect ... - gdy nie ma wifi
             try {
@@ -33,16 +36,21 @@ class TcpClient private constructor() {
                 }
 
                 client.close()
+
+                return arrayOf(true as Any,returning_msg as Any)
             }
-            catch (e: java.net.SocketException ) {
+            catch ( e: SocketException) {
                 // TODO(jak nie ma wifi to też łapie to a nie .connectExcp)
                 Log.e("TcpClient Error","Nie znaleziono hosta o adresie $SERVER_IP:$SERVER_PORT")
             }
-            catch (e: java.net.ConnectException) {
+            catch (e: ConnectException) {
                 Log.e("TcpClient Error", "Nie ma wifi")
             }
+            return arrayOf(false as Any,null)
 
         }
+
+
 
         private fun prepare_packet_content(address: String) : String {
             return """
@@ -57,5 +65,7 @@ class TcpClient private constructor() {
             Accept-Language: pl-PL,pl;q=0.9,en-US;q=0.8,en;q=0.7 \r\n
             """
         }
+
+
     }
 }
