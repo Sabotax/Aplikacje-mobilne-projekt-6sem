@@ -45,4 +45,22 @@
     <string name="ToastSuccessfulyReceivedMsgUnidentified">Connection successful, but message couldn\'t be identified</string>
     <string name="ToastSuccessfulyReceivedMsgIdentified">"Connection successful, message: "</string>
     <string name="btnDBUpdateRecordSend">Update</string>
+    <string name="ToastSuccessfullyRemoved">"Sucessfully removed hive "</string>
+    <string name="ToastRemoveMsg">Are you sure you want to delete hive</string>
+    <string name="ToastDeleteHive">Delete hive</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+    <string name="ToastDidntPassCheck">Didn\'t pass the check (date,number,notes)</string>
+    <string name="Confirmation">Confirmation</string>
+    <string name="Areyousure">Are you sure you want to add</string>
+    <string name="SuccessfulyRemovedAll">Successfully removed all records</string>
+    <string name="AreYouSureAll">Are you sure you want to delete all records?</string>
+    <string name="DeleteAllRecords">Delete all records?</string>
+    <string name="Starting">Starting</string>
+    <string name="ToastSuccessfullyUpdated">Successfully updated record</string>
+    <string name="AreYouSureUpdate">Are you sure you want to update</string>
+    <string name="DBAddTitle">Database Add</string>
+    <string name="DBListMenu">Database List</string>
+    <string name="TitleCommLocal">Local Communication Menu</string>
+    <string name="TitleDBUpdate">Database Update</string>
 </resources>

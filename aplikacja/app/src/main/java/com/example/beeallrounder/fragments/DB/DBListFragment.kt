@@ -17,30 +17,10 @@ import com.example.beeallrounder.data.viewmodel.UserViewModel
 import com.example.beeallrounder.list.ListAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [DBListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DBListFragment : Fragment() {
 
     private lateinit var mUserViewModel : UserViewModel
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,26 +55,6 @@ class DBListFragment : Fragment() {
         }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DBListFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DBListFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.delete_menu,menu)
     }
@@ -108,17 +68,17 @@ class DBListFragment : Fragment() {
 
     private fun deleteAllRecords() {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setPositiveButton("Yes") { _, _  ->
+        builder.setPositiveButton(R.string.Yes) { _, _  ->
             mUserViewModel.deleteAllRecords()
-            Toast.makeText(requireContext(),"Successfully removed all records",
+            Toast.makeText(requireContext(),R.string.SuccessfulyRemovedAll,
                 Toast.LENGTH_LONG).show()
 
         }
-        builder.setNegativeButton("No") { _, _  ->
+        builder.setNegativeButton(R.string.No) { _, _  ->
             //nothing
         }
-        builder.setTitle("Delete all records?")
-        builder.setMessage("Are you sure you want to delete all records?")
+        builder.setTitle(R.string.DeleteAllRecords)
+        builder.setMessage(R.string.AreYouSureAll)
         builder.create().show()
     }
 }

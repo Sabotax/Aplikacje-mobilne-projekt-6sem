@@ -45,4 +45,22 @@
     <string name="ToastSuccessfulyReceivedMsgUnidentified">Udało się, ale wiadomość nie została zidentyfikowana</string>
     <string name="ToastSuccessfulyReceivedMsgIdentified">"Udało się, wiadomość: "</string>
     <string name="btnDBUpdateRecordSend">Zaktualizuj</string>
+    <string name="ToastSuccessfullyRemoved">"Pomyślnie usunięto ul "</string>
+    <string name="ToastRemoveMsg">Jesteś pewny, że chcesz usunąć ul</string>
+    <string name="ToastDeleteHive">Usunąć ul</string>
+    <string name="Yes">Tak</string>
+    <string name="No">Nie</string>
+    <string name="ToastDidntPassCheck">Nie przeszlo sprawdzenia (data,numer,notatki)</string>
+    <string name="Confirmation">Potwierdzenie</string>
+    <string name="Areyousure">Czy na pewno chcesz dodać</string>
+    <string name="SuccessfulyRemovedAll">Pomyślnie usunięto wszystkier rekordy</string>
+    <string name="AreYouSureAll">Jesteś pewny, że chcesz usunąć wszystkie rekordy?</string>
+    <string name="DeleteAllRecords">Usunąć wszystkie rekordy?</string>
+    <string name="Starting">Rozpoczynanie</string>
+    <string name="ToastSuccessfullyUpdated">Pomyślnie zaktualizowano rekord</string>
+    <string name="AreYouSureUpdate">Jesteś pewien, że chcesz zaktualizować</string>
+    <string name="DBAddTitle">Baza danych dodawanie</string>
+    <string name="DBListMenu">Database Lista</string>
+    <string name="TitleCommLocal">Menu lokalnej komunikacji</string>
+    <string name="TitleDBUpdate">Baza danych aktualizacja</string>
 </resources>

@@ -55,8 +55,8 @@ class DBUpdateFragment : Fragment() {
             val hiveNumber = hiveNumber_string.toInt()
 
             val builder = AlertDialog.Builder(requireContext())
-            builder.setTitle("Potwierdzenie") // TODO stringi
-            builder.setMessage("Czy na pewno chcesz dodać")
+            builder.setTitle(R.string.Confirmation)
+            builder.setMessage(R.string.AreYouSureUpdate)
             //builder.setPositiveButton("OK", DialogInterface.OnClickListener(function = x))
 
             builder.setPositiveButton(android.R.string.yes) { dialog, which ->
@@ -64,7 +64,7 @@ class DBUpdateFragment : Fragment() {
                 val updatedSnapshot = Beehive_snapshot(args.currentSnapshot.id,date,hiveNumber,notes)
                 //update snapshot object
                 mUserViewModel.updateRecord(updatedSnapshot)
-                Toast.makeText(requireContext(),R.string.ToastSuccessfulyAddedSnapshot, Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(),R.string.ToastSuccessfullyUpdated, Toast.LENGTH_LONG).show()
                 findNavController().navigate(R.id.action_DBUpdateFragment_to_DBListFragment)
             }
 
@@ -76,7 +76,7 @@ class DBUpdateFragment : Fragment() {
 
         }
         else {
-            Toast.makeText(requireContext(),"Nie przeszlo sprawdzenia (data,numer,notatki)", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(),R.string.ToastDidntPassCheck, Toast.LENGTH_LONG).show()
         }
     }
     private fun inputCheck(date: String, hiveNumber : String, notes: String) : Boolean {
@@ -96,16 +96,16 @@ class DBUpdateFragment : Fragment() {
 
     private fun deleteSnapshot() {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setPositiveButton("Yes") { _, _  ->
+        builder.setPositiveButton(R.string.Yes) { _, _  ->
             mUserViewModel.deleteRecord(args.currentSnapshot)
-            Toast.makeText(requireContext(),"Successfully removed hive ${args.currentSnapshot.hiveNumber}",Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), getString(R.string.ToastSuccessfullyRemoved) + args.currentSnapshot.hiveNumber,Toast.LENGTH_LONG).show()
             findNavController().navigate(R.id.action_DBUpdateFragment_to_DBListFragment)
         }
-        builder.setNegativeButton("No") { _, _  ->
+        builder.setNegativeButton(R.string.No) { _, _  ->
             //nothing
         }
-        builder.setTitle("Delete hive ${args.currentSnapshot.hiveNumber}?")
-        builder.setMessage("Are you sure you want to delete hive ${args.currentSnapshot.hiveNumber}?")
+        builder.setTitle( getString(R.string.ToastDeleteHive) + " ${args.currentSnapshot.hiveNumber}?")
+        builder.setMessage( getString(R.string.ToastRemoveMsg)+" ${args.currentSnapshot.hiveNumber}?")
         builder.create().show()
     }
 }

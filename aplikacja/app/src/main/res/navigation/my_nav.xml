@@ -44,7 +44,7 @@
     <fragment
         android:id="@+id/DBAddFragment"
         android:name="com.example.beeallrounder.fragments.DB.DBAddFragment"
-        android:label="DB add"
+        android:label="@string/DBAddTitle"
         tools:layout="@layout/fragment_d_b_add">
         <action
             android:id="@+id/action_DBAddFragment_to_DBListFragment"
@@ -53,7 +53,7 @@
     <fragment
         android:id="@+id/DBListFragment"
         android:name="com.example.beeallrounder.fragments.DB.DBListFragment"
-        android:label="MenuDB list"
+        android:label="@string/DBListMenu"
         tools:layout="@layout/fragment_d_b_list">
         <action
             android:id="@+id/action_DBListFragment_to_DBMainFragment"
@@ -68,7 +68,7 @@
     <fragment
         android:id="@+id/commLocalDownloadFragment"
         android:name="com.example.beeallrounder.fragments.Comm.CommLocalDownloadFragment"
-        android:label="Comm local"
+        android:label="@string/TitleCommLocal"
         tools:layout="@layout/fragment_comm_local_download">
         <action
             android:id="@+id/action_commLocalDownloadFragment_to_commMainFragment"
@@ -77,7 +77,7 @@
     <fragment
         android:id="@+id/DBUpdateFragment"
         android:name="com.example.beeallrounder.fragments.DB.DBUpdateFragment"
-        android:label="DB update"
+        android:label="@string/TitleDBUpdate"
         tools:layout="@layout/fragment_d_b_update">
         <action
             android:id="@+id/action_DBUpdateFragment_to_DBListFragment"

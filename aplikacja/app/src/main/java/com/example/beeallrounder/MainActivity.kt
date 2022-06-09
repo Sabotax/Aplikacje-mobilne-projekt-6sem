@@ -11,10 +11,6 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    //TODO implement live data and view model to use add fragment as update fragment (optionally)
-    // https://developer.android.com/guide/fragments/communicate
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
