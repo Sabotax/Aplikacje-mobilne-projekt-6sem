@@ -29,7 +29,7 @@ void handleCommDownloadAll() {
   odpowiedz.toCharArray(odpowiedz_downgrade,odpowiedz.length());
 
   server.send(200, "text/plain" ,odpowiedz_downgrade);
-  Serial.println(odpowiedz_downgrade);
+  Serial.println("odpowiadam");
 }
 
 void handleRoot() {
