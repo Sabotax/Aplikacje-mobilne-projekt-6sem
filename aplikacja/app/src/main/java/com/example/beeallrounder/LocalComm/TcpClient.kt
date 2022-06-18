@@ -36,8 +36,17 @@ class TcpClient private constructor() {
                 }
 
                 client.close()
-
+                // TODO trycatch if there's no msg
+                // TODO dac connection close żeby nie czekalo na timeouta z odpowiedzia
+                // przyklad z arduino:
+                /*
+                // This will send the request to the server
+                client.print(String("GET ") + url + " HTTP/1.1\r\n" +
+                        "Host: " + host + "\r\n" +
+                        "Connection: close\r\n\r\n");
                 return arrayOf(true as Any,returning_msg as Any)
+                */
+
             }
             catch ( e: SocketException) {
                 // TODO(jak nie ma wifi to też łapie to a nie .connectExcp)
