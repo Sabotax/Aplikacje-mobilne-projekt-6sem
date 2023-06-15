@@ -8,10 +8,18 @@ import android.bluetooth.le.ScanResult
 import android.content.Context
 import android.util.Log
 import java.util.*
+import kotlin.math.log
 
 
 class BLEController {
-    private var instance: BLEController? = null
+    companion object {
+        private var instance: BLEController? = null
+
+        fun getInstance(ctx: Context): BLEController? {
+            if (null == instance) instance = BLEController(ctx)
+            return instance
+        }
+    }
 
     private var scanner: BluetoothLeScanner? = null
     private var device: BluetoothDevice? = null
@@ -27,11 +35,6 @@ class BLEController {
         bluetoothManager = ctx.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager?
     }
 
-    fun getInstance(ctx: Context): BLEController? {
-        if (null == instance) instance = BLEController(ctx)
-        return instance
-    }
-
     fun addBLEControllerListener(l: BLEControllerListener) {
         if (!listeners.contains(l)) listeners.add(l)
     }
@@ -42,13 +45,15 @@ class BLEController {
 
     fun init() {
         devices.clear()
-        scanner = bluetoothManager!!.adapter.bluetoothLeScanner
+        scanner = bluetoothManager!!.adapter.bluetoothLeScanner // tu jest null
+        Log.d("DR1", "skanuje")
         scanner!!.startScan(bleCallback)
     }
 
     private val bleCallback: ScanCallback = object : ScanCallback() {
         override fun onScanResult(callbackType: Int, result: ScanResult) {
             val device: BluetoothDevice = result.getDevice()
+            Log.d("Scan result", device.name)
             if (!devices.containsKey(device.address) && isThisTheDevice(device)) {
                 deviceFound(device)
             }
