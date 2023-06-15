@@ -63,4 +63,5 @@
     <string name="DBListMenu">Database Lista</string>
     <string name="TitleCommLocal">Menu lokalnej komunikacji</string>
     <string name="TitleDBUpdate">Baza danych aktualizacja</string>
+    <string name="btnCommLocalDownloadBle">BLE download</string>
 </resources>

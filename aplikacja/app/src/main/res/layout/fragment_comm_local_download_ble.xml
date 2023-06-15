@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout8"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.Comm.CommLocalDownloadBle">
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="345dp"
+        android:layout_height="309dp"
+        android:layout_marginTop="36dp"
+        android:background="#eee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/logViewCommLocalDownloadBle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Logaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\nb" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="145dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="44dp"
+        app:layout_constraintStart_toStartOf="@+id/scrollView2"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+
+    <Button
+        android:id="@+id/btnCommLocalDownloadBleScan"
+        android:layout_width="145dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="24dp"
+        android:text="Scan"
+        app:layout_constraintBottom_toTopOf="@+id/btnCommLocalDownloadBleConnect"
+        app:layout_constraintEnd_toEndOf="@+id/scrollView2"
+        app:layout_constraintTop_toTopOf="@+id/spinner" />
+
+    <Button
+        android:id="@+id/btnCommLocalDownloadBleConnect"
+        android:layout_width="145dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="24dp"
+        android:text="Connect"
+        app:layout_constraintBottom_toTopOf="@+id/btnCommLocalDownloadBleDisconnect"
+        app:layout_constraintEnd_toEndOf="@+id/btnCommLocalDownloadBleScan" />
+
+    <Button
+        android:id="@+id/btnCommLocalDownloadBleDisconnect"
+        android:layout_width="145dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="24dp"
+        android:text="Disconnect"
+        app:layout_constraintEnd_toEndOf="@+id/btnCommLocalDownloadBleConnect"
+        app:layout_constraintTop_toBottomOf="@+id/btnCommLocalDownloadBleConnect" />
+
+    <Button
+        android:id="@+id/btnCommLocalDownloadBleSynch"
+        android:layout_width="145dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="24dp"
+        android:text="Synch"
+        app:layout_constraintEnd_toEndOf="@+id/btnCommLocalDownloadBleConnect"
+        app:layout_constraintTop_toBottomOf="@+id/btnCommLocalDownloadBleDisconnect" />
+
+    <EditText
+        android:id="@+id/editTextDate"
+        android:layout_width="168dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="140dp"
+        android:ems="10"
+        android:inputType="date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/spinner" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

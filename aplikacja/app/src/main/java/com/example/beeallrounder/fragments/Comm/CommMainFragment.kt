@@ -26,6 +26,11 @@ class CommMainFragment : Fragment() {
         btnCommMainToLocalDownload.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_commMainFragment_to_commLocalDownloadFragment)
         }
+
+        val btnCommMainToLocalDownloadBle = view.findViewById<Button>(R.id.btnCommMainToCommLocalDownloadBle)
+        btnCommMainToLocalDownloadBle.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_commMainFragment_to_commLocalDownloadBle)
+        }
     }
 
 }

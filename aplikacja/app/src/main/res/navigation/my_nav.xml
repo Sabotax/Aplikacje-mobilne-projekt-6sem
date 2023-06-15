@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_commMainFragment_to_commLocalDownloadFragment"
             app:destination="@id/commLocalDownloadFragment" />
+        <action
+            android:id="@+id/action_commMainFragment_to_commLocalDownloadBle"
+            app:destination="@id/commLocalDownloadBle" />
     </fragment>
     <fragment
         android:id="@+id/DBAddFragment"
@@ -85,5 +88,14 @@
         <argument
             android:name="currentSnapshot"
             app:argType="com.example.beeallrounder.data.model.Beehive_snapshot" />
+    </fragment>
+    <fragment
+        android:id="@+id/commLocalDownloadBle"
+        android:name="com.example.beeallrounder.fragments.Comm.CommLocalDownloadBle"
+        android:label="fragment_comm_local_download_ble"
+        tools:layout="@layout/fragment_comm_local_download_ble" >
+        <action
+            android:id="@+id/action_commLocalDownloadBle_to_commMainFragment"
+            app:destination="@id/commMainFragment" />
     </fragment>
 </navigation>
