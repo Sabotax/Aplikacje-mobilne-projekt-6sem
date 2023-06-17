@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -38,6 +39,25 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
     private lateinit var btnSynch: Button
     private lateinit var spinner: Spinner
 
+    private val PERMISSIONS_STORAGE = arrayOf(
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION,
+        Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,
+        Manifest.permission.BLUETOOTH_SCAN,
+        Manifest.permission.BLUETOOTH_CONNECT,
+        Manifest.permission.BLUETOOTH_PRIVILEGED
+    )
+    private val PERMISSIONS_LOCATION = arrayOf(
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION,
+        Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,
+        Manifest.permission.BLUETOOTH_SCAN,
+        Manifest.permission.BLUETOOTH_CONNECT,
+        Manifest.permission.BLUETOOTH_PRIVILEGED
+    )
+
     private var devicesList = mutableListOf<String>()
 
     override fun onCreateView(
@@ -46,6 +66,17 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
     ): View? {
         // Inflate the layout for this fragment
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+
+        val requestPermissionLauncher =
+            registerForActivityResult(
+                ActivityResultContracts.RequestPermission()
+            ) { isGranted: Boolean ->
+                if (isGranted) {
+                    // Permission is granted. Continue the action or workflow in your
+                    // app.
+                }
+            }
+
         return inflater.inflate(R.layout.fragment_comm_local_download_ble, container, false)
     }
 
@@ -58,7 +89,14 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
 
         btnScan = view.findViewById<Button>(R.id.btnCommLocalDownloadBleScan)
         btnScan.setOnClickListener {
-            bleController?.init()
+            this.deviceAddress = null;
+            this.bleController = BLEController.getInstance(requireContext());
+            this.bleController?.addBLEControllerListener(this);
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+                log("[BLE]\tSearching for BlueCArd...");
+                this.bleController?.init();
+            }
             Toast.makeText(requireContext(),"scan",Toast.LENGTH_LONG).show()
         }
 
@@ -104,21 +142,21 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
 
     }
 
-    private fun checkPermissions() {
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED
-            ||
-            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.BLUETOOTH_SCAN)
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-            log("\"Access Fine Location\" permission not granted yet!")
-            log("Whitout this permission Blutooth devices cannot be searched!")
-            ActivityCompat.requestPermissions(
-                requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.BLUETOOTH_SCAN),
-                42
-            )
-        }
-    }
+//    private fun checkPermissions() {
+//        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+//            != PackageManager.PERMISSION_GRANTED
+//            ||
+//            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.BLUETOOTH_SCAN)
+//            != PackageManager.PERMISSION_GRANTED
+//        ) {
+//            log("\"Access Fine Location\" permission not granted yet!")
+//            log("Whitout this permission Blutooth devices cannot be searched!")
+//            ActivityCompat.requestPermissions(
+//                requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.BLUETOOTH_SCAN),
+//                42
+//            )
+//        }
+//    }
 
     private fun checkBLESupport() {
         // Check if BLE is supported on the device.
@@ -151,18 +189,18 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
         btnConnect.isEnabled = true
     }
 
-    override fun onResume() {
-        super.onResume()
-        log("onResume");
-        this.deviceAddress = null;
-        this.bleController = BLEController.getInstance(requireContext());
-        this.bleController?.addBLEControllerListener(this);
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED) {
-            log("[BLE]\tSearching for BlueCArd...");
-            this.bleController?.init();
-        }
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        log("onResume");
+//        this.deviceAddress = null;
+//        this.bleController = BLEController.getInstance(requireContext());
+//        this.bleController?.addBLEControllerListener(this);
+//        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+//            == PackageManager.PERMISSION_GRANTED) {
+//            log("[BLE]\tSearching for BlueCArd...");
+//            this.bleController?.init();
+//        }
+//    }
 
     override fun onStart() {
         super.onStart()
@@ -176,5 +214,26 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
     override fun onPause() {
         super.onPause()
         this.bleController?.removeBLEControllerListener(this);
+    }
+
+    private fun checkPermissions() {
+        val permission1 =
+            ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        val permission2 =
+            ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.BLUETOOTH_SCAN)
+        if (permission1 != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                PERMISSIONS_STORAGE,
+                1
+            )
+        } else if (permission2 != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                PERMISSIONS_LOCATION,
+                1
+            )
+        }
     }
 }

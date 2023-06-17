@@ -7,6 +7,7 @@ import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import java.util.*
 import kotlin.math.log
 
@@ -53,7 +54,7 @@ class BLEController {
     private val bleCallback: ScanCallback = object : ScanCallback() {
         override fun onScanResult(callbackType: Int, result: ScanResult) {
             val device: BluetoothDevice = result.getDevice()
-            Log.d("Scan result", device.name)
+            Log.d("Scan result", device.name ?: "null")
             if (!devices.containsKey(device.address) && isThisTheDevice(device)) {
                 deviceFound(device)
             }
@@ -74,7 +75,7 @@ class BLEController {
     }
 
     private fun isThisTheDevice(device: BluetoothDevice): Boolean {
-        return null != device.name && device.name.startsWith("BlueCArd")
+        return null != device.name && device.name.startsWith("ESP")
     }
 
     private fun deviceFound(device: BluetoothDevice) {
