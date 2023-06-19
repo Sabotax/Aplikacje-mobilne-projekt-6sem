@@ -47,14 +47,15 @@ class BLEController {
     fun init() {
         devices.clear()
         scanner = bluetoothManager!!.adapter.bluetoothLeScanner // tu jest null
-        Log.d("DR1", "skanuje")
+        fireLog( "skanuje")
+        if(scanner == null) fireLog("scanner jest null")
         scanner!!.startScan(bleCallback)
     }
 
     private val bleCallback: ScanCallback = object : ScanCallback() {
         override fun onScanResult(callbackType: Int, result: ScanResult) {
             val device: BluetoothDevice = result.getDevice()
-            Log.d("Scan result", device.name ?: "null")
+            //Log.d("Scan result", device.name ?: "null")
             if (!devices.containsKey(device.address) && isThisTheDevice(device)) {
                 deviceFound(device)
             }
@@ -86,7 +87,7 @@ class BLEController {
     fun connectToDevice(address: String) {
         device = devices[address]
         scanner!!.stopScan(bleCallback)
-        Log.i("[BLE]", "connect to device " + device!!.address)
+        fireLog( "connect to device " + device!!.address)
         bluetoothGatt = device!!.connectGatt(null, false, bleConnectCallback)
     }
 
@@ -94,6 +95,8 @@ class BLEController {
         override fun onConnectionStateChange(gatt: BluetoothGatt, status: Int, newState: Int) {
             if (newState == BluetoothProfile.STATE_CONNECTED) {
                 Log.i("[BLE]", "start service discovery " + bluetoothGatt!!.discoverServices())
+                // tymczasowo tutaj:
+                fireConnected()
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                 btGattChar = null
                 Log.w("[BLE]", "DISCONNECTED with status $status")
@@ -106,20 +109,18 @@ class BLEController {
         override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
             if (null == btGattChar) {
                 for (service in gatt.services) {
-                    if (service.uuid.toString().uppercase(Locale.getDefault())
-                            .startsWith("0000FFE0")
-                    ) {
+                    if (/*service.uuid.toString().uppercase(Locale.getDefault()).startsWith("0000FFE0")*/true) {
                         val gattCharacteristics = service.characteristics
+                        fireLog("service ${service.uuid}")
                         for (bgc in gattCharacteristics) {
-                            if (bgc.uuid.toString().uppercase(Locale.getDefault())
-                                    .startsWith("0000FFE1")
-                            ) {
-                                val chprop = bgc.properties
-                                if (chprop and BluetoothGattCharacteristic.PROPERTY_WRITE or (chprop and BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) > 0) {
-                                    btGattChar = bgc
-                                    Log.i("[BLE]", "CONNECTED and ready to send")
-                                    fireConnected()
-                                }
+                            if (/*bgc.uuid.toString().uppercase(Locale.getDefault()).startsWith("0000FFE1")*/true) {
+                                fireLog("bgc ${service.uuid}")
+//                                val chprop = bgc.properties
+//                                if (chprop and BluetoothGattCharacteristic.PROPERTY_WRITE or (chprop and BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) > 0) {
+//                                    btGattChar = bgc
+//                                    Log.i("[BLE]", "CONNECTED and ready to send")
+//                                    fireConnected()
+//                                }
                             }
                         }
                     }
@@ -131,6 +132,10 @@ class BLEController {
     private fun fireDisconnected() {
         for (l in listeners) l.BLEControllerDisconnected()
         device = null
+    }
+
+    private fun fireLog(s: String) {
+        for (l in listeners) l.fireLog(s)
     }
 
     private fun fireConnected() {

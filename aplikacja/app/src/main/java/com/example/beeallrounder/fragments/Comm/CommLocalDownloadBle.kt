@@ -21,6 +21,7 @@ import com.example.beeallrounder.LocalComm.BLEControllerListener
 import com.example.beeallrounder.LocalComm.RemoteBLEDeviceController
 import com.example.beeallrounder.R
 import com.example.beeallrounder.data.viewmodel.UserViewModel
+import java.util.Queue
 
 
 class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLEControllerListener {
@@ -37,7 +38,18 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
     private lateinit var btnConnect: Button
     private lateinit var btnDisconnect: Button
     private lateinit var btnSynch: Button
+
     private lateinit var spinner: Spinner
+
+    object ButtonsController {
+        var flag: Boolean = false
+        var btnScan: Boolean = true
+        var btnConnect: Boolean = false
+        var btnDisconnect: Boolean = false
+        val btnSynch: Boolean = false
+    }
+
+    private val queueToLog: MutableList<String> = mutableListOf()
 
     private val PERMISSIONS_STORAGE = arrayOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -58,7 +70,8 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
         Manifest.permission.BLUETOOTH_PRIVILEGED
     )
 
-    private var devicesList = mutableListOf<String>()
+    private val devicesList = mutableListOf<Pair<String,String>?>()
+    private var currentSpinnerOption: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,15 +80,15 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
         // Inflate the layout for this fragment
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
-        val requestPermissionLauncher =
-            registerForActivityResult(
-                ActivityResultContracts.RequestPermission()
-            ) { isGranted: Boolean ->
-                if (isGranted) {
-                    // Permission is granted. Continue the action or workflow in your
-                    // app.
-                }
-            }
+//        val requestPermissionLauncher =
+//            registerForActivityResult(
+//                ActivityResultContracts.RequestPermission()
+//            ) { isGranted: Boolean ->
+//                if (isGranted) {
+//                    // Permission is granted. Continue the action or workflow in your
+//                    // app.
+//                }
+//            }
 
         return inflater.inflate(R.layout.fragment_comm_local_download_ble, container, false)
     }
@@ -89,41 +102,64 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
 
         btnScan = view.findViewById<Button>(R.id.btnCommLocalDownloadBleScan)
         btnScan.setOnClickListener {
-            this.deviceAddress = null;
-            this.bleController = BLEController.getInstance(requireContext());
-            this.bleController?.addBLEControllerListener(this);
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-                log("[BLE]\tSearching for BlueCArd...");
-                this.bleController?.init();
-            }
-            Toast.makeText(requireContext(),"scan",Toast.LENGTH_LONG).show()
+            scanResume()
         }
 
         btnConnect = view.findViewById<Button>(R.id.btnCommLocalDownloadBleConnect)
         btnConnect.setOnClickListener {
-            Toast.makeText(requireContext(),"connect",Toast.LENGTH_LONG).show()
+            if(currentSpinnerOption != null) {
+                log("attempting connection to $currentSpinnerOption")
+                val address = devicesList[currentSpinnerOption!!]?.second
+                if (address == null) log("err2, z jakiegoś powodu adres urządzenia to null")
+                else
+                    bleController?.connectToDevice(address)
+            }
+            else {
+                log("Wiadomość nie powinna być widoczna, skontaktuj się z administratorem, err1")
+            }
+
+
         }
 
         btnDisconnect = view.findViewById<Button>(R.id.btnCommLocalDownloadBleDisconnect)
         btnDisconnect.setOnClickListener {
-            Toast.makeText(requireContext(),"disconnect",Toast.LENGTH_LONG).show()
             log("disconeccted")
+            bleController?.disconnect()
         }
 
         btnSynch = view.findViewById<Button>(R.id.btnCommLocalDownloadBleSynch)
         btnSynch.setOnClickListener {
-            Toast.makeText(requireContext(),"synch",Toast.LENGTH_LONG).show()
-            log("synch")
+            //Toast.makeText(requireContext(),"synch",Toast.LENGTH_LONG).show()
+            //log("synch")
+            log("todo")
         }
 
         spinner = view.findViewById(R.id.spinner)
-        setSpinnerOptions(listOf("Twoja stara","Twój stary"))
+
+        Thread(Runnable {
+            //update UI base on backend thread input
+            while(true) {
+                if (queueToLog.isNotEmpty()) {
+                    val s = queueToLog.removeFirstOrNull()
+                    if (s != null) activity?.runOnUiThread {
+                        log(s)
+                    }
+                }
+                if (ButtonsController.flag) {
+                    activity?.runOnUiThread {
+                        btnScan.isEnabled = ButtonsController.btnScan
+                        btnConnect.isEnabled = ButtonsController.btnConnect
+                        btnDisconnect.isEnabled = ButtonsController.btnDisconnect
+                        btnSynch.isEnabled = ButtonsController.btnSynch
+                    }
+                    ButtonsController.flag = false
+                }
+                Thread.sleep(500)
+            }
+        }).start()
 
         checkBLESupport();
         checkPermissions();
-
-
     }
 
     fun setSpinnerOptions(list: List<String>) {
@@ -134,12 +170,15 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val item  = parent?.getItemAtPosition(position) as? String
-        Toast.makeText(requireContext(),"$item",Toast.LENGTH_LONG).show()
+        //val item  = parent?.getItemAtPosition(position) as? String
+        currentSpinnerOption = position
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
-
+        currentSpinnerOption = null
+        btnConnect.isEnabled = false
+        ButtonsController.btnConnect = false
+        // nie potrzeba flagi, bo to leci z wątku UI, nie backendowego BLE
     }
 
 //    private fun checkPermissions() {
@@ -166,41 +205,49 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
     }
 
     private fun log(s: String) {
+        if(logView.text.length > 1000) logView.text = logView.text.drop(s.length)
         logView.text = "${logView.text}\n$s"
     }
 
     override fun BLEControllerConnected() {
-        log("[BLE]\tConnected")
-        btnDisconnect.isEnabled = true
-        //switchLEDButton.setEnabled(true)
+        fireLog("[BLE]\tConnected")
+        ButtonsController.btnDisconnect = true
+        ButtonsController.btnScan = false
+        ButtonsController.flag = true
     }
 
     override fun BLEControllerDisconnected() {
-        log("[BLE]\tDisconnected")
-        btnScan.isEnabled = true
-        btnConnect.isEnabled = false
+        fireLog("[BLE]\tDisconnected")
+        ButtonsController.btnScan = true
+        ButtonsController.btnConnect = false
+        ButtonsController.flag = true
     }
 
     override fun BLEDeviceFound(name: String, address: String) {
-        log("Device $name found with address $address")
-        deviceAddress = address
-        devicesList.add(name) // todo pamiętać o usuwaniu tych których już z nami nie ma RIP
-        setSpinnerOptions(devicesList)
-        btnConnect.isEnabled = true
+        fireLog("Device $name found with address $address")
+        //deviceAddress = address
+        devicesList.add(Pair(name,address))
+        setSpinnerOptions(devicesList.mapNotNull { it?.first })
+        ButtonsController.btnConnect = true
+        ButtonsController.flag = true
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        log("onResume");
-//        this.deviceAddress = null;
-//        this.bleController = BLEController.getInstance(requireContext());
-//        this.bleController?.addBLEControllerListener(this);
-//        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-//            == PackageManager.PERMISSION_GRANTED) {
-//            log("[BLE]\tSearching for BlueCArd...");
-//            this.bleController?.init();
-//        }
-//    }
+    override fun onResume() {
+        super.onResume()
+        scanResume()
+    }
+
+    private fun scanResume() {
+        log("onResume");
+        devicesList.clear()
+        this.bleController = BLEController.getInstance(requireContext());
+        this.bleController?.addBLEControllerListener(this);
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+            == PackageManager.PERMISSION_GRANTED) {
+            log("[BLE]\tSearching for BlueCArd...");
+            this.bleController?.init();
+        }
+    }
 
     override fun onStart() {
         super.onStart()
@@ -235,5 +282,9 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
                 1
             )
         }
+    }
+
+    override fun fireLog(s: String) {
+        queueToLog.add(s)
     }
 }
