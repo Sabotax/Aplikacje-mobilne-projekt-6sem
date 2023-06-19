@@ -115,12 +115,13 @@ class BLEController {
                         for (bgc in gattCharacteristics) {
                             if (/*bgc.uuid.toString().uppercase(Locale.getDefault()).startsWith("0000FFE1")*/true) {
                                 fireLog("bgc ${service.uuid}")
-//                                val chprop = bgc.properties
-//                                if (chprop and BluetoothGattCharacteristic.PROPERTY_WRITE or (chprop and BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) > 0) {
-//                                    btGattChar = bgc
-//                                    Log.i("[BLE]", "CONNECTED and ready to send")
-//                                    fireConnected()
-//                                }
+                                val chprop = bgc.properties
+                                if (chprop and BluetoothGattCharacteristic.PROPERTY_WRITE or (chprop and BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) > 0) {
+                                    btGattChar = bgc
+                                    Log.i("[BLE]", "CONNECTED and ready to send")
+                                    sendData(ByteArray(255))
+                                    fireConnected()
+                                }
                             }
                         }
                     }
