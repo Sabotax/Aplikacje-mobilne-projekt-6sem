@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.beeallrounder.LocalComm.TcpClient
 import com.example.beeallrounder.R
-import com.example.beeallrounder.data.model.Beehive_snapshot
-import com.example.beeallrounder.data.viewmodel.UserViewModel
+import com.example.beeallrounder.data.oldDB.model.Beehive_snapshot
+import com.example.beeallrounder.data.oldDB.viewmodel.UserViewModelOld
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,14 +22,14 @@ import java.util.*
 
 class CommLocalDownloadFragment : Fragment() {
 
-    private lateinit var mUserViewModel: UserViewModel
+    private lateinit var mUserViewModel: UserViewModelOld
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        mUserViewModel = ViewModelProvider(this).get(UserViewModelOld::class.java)
         return inflater.inflate(R.layout.fragment_comm_local_download, container, false)
     }
 

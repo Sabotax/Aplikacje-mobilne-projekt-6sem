@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -20,12 +19,11 @@ import com.example.beeallrounder.LocalComm.BLEController
 import com.example.beeallrounder.LocalComm.BLEControllerListener
 import com.example.beeallrounder.LocalComm.RemoteBLEDeviceController
 import com.example.beeallrounder.R
-import com.example.beeallrounder.data.viewmodel.UserViewModel
-import java.util.Queue
+import com.example.beeallrounder.data.oldDB.viewmodel.UserViewModelOld
 
 
 class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLEControllerListener {
-    private lateinit var mUserViewModel: UserViewModel
+    private lateinit var mUserViewModel: UserViewModelOld
 
     private var bleController: BLEController? = null
     private val remoteControl: RemoteBLEDeviceController? = null
@@ -78,7 +76,7 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        mUserViewModel = ViewModelProvider(this).get(UserViewModelOld::class.java)
 
 //        val requestPermissionLauncher =
 //            registerForActivityResult(
@@ -136,15 +134,17 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
 
         spinner = view.findViewById(R.id.spinner)
 
-        Thread(Runnable {
+        Thread{
             //update UI base on backend thread input
             while(true) {
-                if (queueToLog.isNotEmpty()) {
+
+                while (queueToLog.isNotEmpty()) {
                     val s = queueToLog.removeFirstOrNull()
                     if (s != null) activity?.runOnUiThread {
                         log(s)
                     }
                 }
+
                 if (ButtonsController.flag) {
                     activity?.runOnUiThread {
                         btnScan.isEnabled = ButtonsController.btnScan
@@ -154,9 +154,16 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
                     }
                     ButtonsController.flag = false
                 }
+
+                while (devicesList.any { it.dataToLogQueue.isNotEmpty() }) {
+                    devicesList.forEach {
+                        log(it.dataToLogQueue.removeFirst())
+                    }
+                }
+
                 Thread.sleep(500)
             }
-        }).start()
+        }.start()
 
         checkBLESupport();
         checkPermissions();
@@ -218,6 +225,7 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
 
     override fun BLEControllerDisconnected() {
         fireLog("[BLE]\tDisconnected")
+        // TODO usunąć z listy ten item, a przed tym ustawić na nim flage thread na false
         ButtonsController.btnScan = true
         ButtonsController.btnConnect = false
         ButtonsController.flag = true
@@ -225,7 +233,7 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
 
     override fun BLEDeviceFound(name: String, address: String) {
         fireLog("Device $name found with address $address")
-        devicesList.add(RemoteBLEDeviceController(name,address))
+        devicesList.add(RemoteBLEDeviceController(name,address,this)) // złe przeczucia co do tego
         setSpinnerOptions(devicesList.map { it.deviceName })
         ButtonsController.btnConnect = true
         ButtonsController.flag = true

@@ -1,12 +1,15 @@
 package com.example.beeallrounder.LocalComm
 
 import android.util.Log
-import java.io.Closeable
-import java.nio.charset.Charset
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
+import com.example.beeallrounder.data.DbEspSynch.model.SensorRecord
+import com.example.beeallrounder.data.DbEspSynch.viewmodel.UserViewModel
 
 class RemoteBLEDeviceController(
     val deviceName: String,
-    val deviceAddress: String
+    val deviceAddress: String,
+    private val app: ViewModelStoreOwner
 ) {
     // nieaktualne, v1
     //ramka komunikacji (BLE ma max 512 bajtów): 6 bajtów na adres? | 1 bajt na typ instrukcji |
@@ -54,6 +57,11 @@ class RemoteBLEDeviceController(
     val incomingDataQueue: MutableList<ByteArray?> = mutableListOf()
     val threadFlag = true
 
+    val dataToLogQueue: MutableList<String> = mutableListOf()
+
+    private var mUserViewModel: UserViewModel? = null
+    //mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java) żeby rozpocząć
+
     init{
         execute()
     }
@@ -63,8 +71,12 @@ class RemoteBLEDeviceController(
         return enumValues<INSTRUCTION_TYPE_RECEIVING>().find { it.value == data[0] }
     }
 
-    private fun decodeRowData(data: ByteArray): String {
+    private fun decodePacketData(data: ByteArray): String {
         return data.toString(Charsets.US_ASCII)
+    }
+
+    private fun decodedDataToSensorRecord(decodedData: String): SensorRecord {
+        TODO()
     }
 
     fun execute() {
@@ -82,17 +94,23 @@ class RemoteBLEDeviceController(
                         val dataWithoutInstruction = dataItem.slice(IntRange(1,dataItem.size-1)).toByteArray()
                         when (decodedInstruction) {
                             INSTRUCTION_TYPE_RECEIVING.SENDING -> {
-                                val decodedData = decodeRowData(dataWithoutInstruction)
-                                //todo
-                                // jeśli nie ma rozpoczętej "passy" zapisywania tego do pliku/DB lokalnej to zacznij
-                                // ewentualnie jeśli jest baza to niech dopisuje wiersz po wierszu (lepsze)
+                                val decodedData = decodePacketData(dataWithoutInstruction)
+                                val row = decodedDataToSensorRecord(decodedData)
 
+                                if(mUserViewModel == null) {
+                                    mUserViewModel = ViewModelProvider(app).get(UserViewModel::class.java)
+                                }
+                                mUserViewModel!!.addSensorRecord(row)
                             }
                             INSTRUCTION_TYPE_RECEIVING.STOP -> {
+                                val day: String = TODO() // esp w danych ma przesłać który dzień właśnie skończyło wysyłać
+                                dataToLogQueue.add("Urządzenie $deviceName skończyło przesyłanie dnia $day")
                                 // wysyla logowanie że już koniec dla tego dnia
                             }
                             INSTRUCTION_TYPE_RECEIVING.ERROR -> {
                                 // log że error i wyjebalo :C z komunikatem z esp jak się da
+                                val errorMsg = TODO() // esp przesyła co się stało (jeśli obsłuży)
+                                dataToLogQueue.add("Wystąpił błąd na esp ")
                             }
                         }
                     }
@@ -103,12 +121,15 @@ class RemoteBLEDeviceController(
     }
 
 
-    fun prepareDataToSend(instruction: INSTRUCTION_TYPE_SENDING, data: String): ByteArray { //będzie w pętli wysyłało prośby dzień po dniu
-        val ramka = (listOf<Byte>(instruction.value) + data.map { it.code.toByte() }).toTypedArray().toByteArray()
+    fun prepareDataToSend(instruction: INSTRUCTION_TYPE_SENDING, data: String): ByteArray? { //będzie w pętli wysyłało prośby dzień po dniu
+        val packet = (listOf<Byte>(instruction.value) + data.map { it.code.toByte() }).toTypedArray().toByteArray()
 
-        if(ramka.size > 500) Log.e("BLE","data to send to big! size: ${ramka.size}")
+        if(packet.size > 500) {
+            Log.e("BLE","data to send to big! size: ${packet.size}")
+            return null
+        }
 
-        return ramka
+        return packet
     }
 }
 
