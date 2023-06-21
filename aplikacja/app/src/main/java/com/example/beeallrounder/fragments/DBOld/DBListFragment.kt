@@ -11,7 +11,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beeallrounder.R
-import com.example.beeallrounder.data.oldDB.viewmodel.UserViewModelOld
+import com.example.beeallrounder.databases.oldDB.viewmodel.UserViewModelOld
 import com.example.beeallrounder.list.ListAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 

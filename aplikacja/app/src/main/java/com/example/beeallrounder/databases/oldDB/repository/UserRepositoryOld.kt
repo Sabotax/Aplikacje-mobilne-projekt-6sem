@@ -1,8 +1,8 @@
-package com.example.beeallrounder.data.oldDB.repository
+package com.example.beeallrounder.databases.oldDB.repository
 
 import androidx.lifecycle.LiveData
-import com.example.beeallrounder.data.oldDB.UserDaoOld
-import com.example.beeallrounder.data.oldDB.model.Beehive_snapshot
+import com.example.beeallrounder.databases.oldDB.UserDaoOld
+import com.example.beeallrounder.databases.oldDB.model.Beehive_snapshot
 
 class UserRepositoryOld(private val userDaoOld: UserDaoOld) {
 

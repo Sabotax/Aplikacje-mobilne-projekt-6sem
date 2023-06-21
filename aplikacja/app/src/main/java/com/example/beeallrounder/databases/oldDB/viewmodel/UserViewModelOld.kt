@@ -1,12 +1,12 @@
-package com.example.beeallrounder.data.oldDB.viewmodel
+package com.example.beeallrounder.databases.oldDB.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.beeallrounder.data.oldDB.UserDatabaseOld
-import com.example.beeallrounder.data.oldDB.repository.UserRepositoryOld
-import com.example.beeallrounder.data.oldDB.model.Beehive_snapshot
+import com.example.beeallrounder.databases.oldDB.UserDatabaseOld
+import com.example.beeallrounder.databases.oldDB.repository.UserRepositoryOld
+import com.example.beeallrounder.databases.oldDB.model.Beehive_snapshot
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

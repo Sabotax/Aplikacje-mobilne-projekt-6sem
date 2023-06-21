@@ -19,7 +19,7 @@ import com.example.beeallrounder.LocalComm.BLEController
 import com.example.beeallrounder.LocalComm.BLEControllerListener
 import com.example.beeallrounder.LocalComm.RemoteBLEDeviceController
 import com.example.beeallrounder.R
-import com.example.beeallrounder.data.oldDB.viewmodel.UserViewModelOld
+import com.example.beeallrounder.databases.oldDB.viewmodel.UserViewModelOld
 
 
 class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLEControllerListener {

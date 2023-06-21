@@ -1,8 +1,8 @@
-package com.example.beeallrounder.data.oldDB
+package com.example.beeallrounder.databases.oldDB
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.beeallrounder.data.oldDB.model.Beehive_snapshot
+import com.example.beeallrounder.databases.oldDB.model.Beehive_snapshot
 
 @Dao
 interface UserDaoOld {

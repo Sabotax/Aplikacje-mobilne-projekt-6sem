@@ -12,8 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.beeallrounder.R
-import com.example.beeallrounder.data.oldDB.model.Beehive_snapshot
-import com.example.beeallrounder.data.oldDB.viewmodel.UserViewModelOld
+import com.example.beeallrounder.databases.oldDB.model.Beehive_snapshot
+import com.example.beeallrounder.databases.oldDB.viewmodel.UserViewModelOld
 
 class DBUpdateFragment : Fragment() {
 

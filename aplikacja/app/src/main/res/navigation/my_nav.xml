@@ -87,7 +87,7 @@
             app:destination="@id/DBListFragment" />
         <argument
             android:name="currentSnapshot"
-            app:argType="com.example.beeallrounder.data.model.Beehive_snapshot" />
+            app:argType="com.example.beeallrounder.databases.oldDB.model.Beehive_snapshot" />
     </fragment>
     <fragment
         android:id="@+id/commLocalDownloadBle"

@@ -1,9 +1,8 @@
-package com.example.beeallrounder.data.oldDB.model
+package com.example.beeallrounder.databases.oldDB.model
 
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.ColumnInfo
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

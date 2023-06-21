@@ -8,7 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beeallrounder.R
-import com.example.beeallrounder.data.oldDB.model.Beehive_snapshot
+import com.example.beeallrounder.databases.oldDB.model.Beehive_snapshot
 import com.example.beeallrounder.fragments.DBOld.DBListFragmentDirections
 
 class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {

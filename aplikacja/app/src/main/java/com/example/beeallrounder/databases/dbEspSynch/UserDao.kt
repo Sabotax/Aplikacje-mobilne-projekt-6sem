@@ -1,9 +1,8 @@
-package com.example.beeallrounder.data.DbEspSynch
+package com.example.beeallrounder.databases.dbEspSynch
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
-import com.example.beeallrounder.data.DbEspSynch.model.SensorRecord
+import com.example.beeallrounder.databases.dbEspSynch.model.SensorRecord
 
 @Dao
 interface UserDao {

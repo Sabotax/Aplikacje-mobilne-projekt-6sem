@@ -3,8 +3,8 @@ package com.example.beeallrounder.LocalComm
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
-import com.example.beeallrounder.data.DbEspSynch.model.SensorRecord
-import com.example.beeallrounder.data.DbEspSynch.viewmodel.UserViewModel
+import com.example.beeallrounder.databases.dbEspSynch.model.SensorRecord
+import com.example.beeallrounder.databases.dbEspSynch.viewmodel.UserViewModel
 
 class RemoteBLEDeviceController(
     val deviceName: String,

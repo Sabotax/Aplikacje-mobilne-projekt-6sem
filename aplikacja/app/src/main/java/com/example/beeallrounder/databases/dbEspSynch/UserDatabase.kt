@@ -1,10 +1,10 @@
-package com.example.beeallrounder.data.DbEspSynch
+package com.example.beeallrounder.databases.dbEspSynch
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.beeallrounder.data.DbEspSynch.model.SensorRecord
+import com.example.beeallrounder.databases.dbEspSynch.model.SensorRecord
 
 @Database(entities = [SensorRecord::class], version = 1, exportSchema = false)
 abstract class UserDatabase: RoomDatabase() {

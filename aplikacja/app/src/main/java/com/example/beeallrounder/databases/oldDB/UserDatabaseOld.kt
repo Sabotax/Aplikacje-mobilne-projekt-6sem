@@ -1,10 +1,10 @@
-package com.example.beeallrounder.data.oldDB
+package com.example.beeallrounder.databases.oldDB
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.beeallrounder.data.oldDB.model.Beehive_snapshot
+import com.example.beeallrounder.databases.oldDB.model.Beehive_snapshot
 
 @Database(entities = [Beehive_snapshot::class], version = 1, exportSchema = false)
 abstract class UserDatabaseOld : RoomDatabase() {

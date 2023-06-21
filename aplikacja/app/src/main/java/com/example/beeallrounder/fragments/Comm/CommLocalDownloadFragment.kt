@@ -13,8 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.beeallrounder.LocalComm.TcpClient
 import com.example.beeallrounder.R
-import com.example.beeallrounder.data.oldDB.model.Beehive_snapshot
-import com.example.beeallrounder.data.oldDB.viewmodel.UserViewModelOld
+import com.example.beeallrounder.databases.oldDB.model.Beehive_snapshot
+import com.example.beeallrounder.databases.oldDB.viewmodel.UserViewModelOld
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
