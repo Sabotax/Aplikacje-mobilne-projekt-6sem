@@ -5,17 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.fragment.app.ListFragment
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beeallrounder.R
-import com.example.beeallrounder.data.model.Beehive_snapshot
-import com.example.beeallrounder.fragments.DB.DBListFragment
-import com.example.beeallrounder.fragments.DB.DBListFragmentDirections
-import kotlin.math.acos
+import com.example.beeallrounder.data.oldDB.model.Beehive_snapshot
+import com.example.beeallrounder.fragments.DBOld.DBListFragmentDirections
 
 class ListAdapter : RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 

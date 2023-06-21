@@ -1,11 +1,11 @@
-package com.example.beeallrounder.data
+package com.example.beeallrounder.data.oldDB
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.beeallrounder.data.model.Beehive_snapshot
+import com.example.beeallrounder.data.oldDB.model.Beehive_snapshot
 
 @Dao
-interface UserDao {
+interface UserDaoOld {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addRecord(snapshot: Beehive_snapshot)

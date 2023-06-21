@@ -1,4 +1,4 @@
-package com.example.beeallrounder.data.model
+package com.example.beeallrounder.data.oldDB.model
 
 import android.os.Parcelable
 import androidx.room.Entity

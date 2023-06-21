@@ -1,4 +1,4 @@
-package com.example.beeallrounder.fragments.DB
+package com.example.beeallrounder.fragments.DBOld
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -13,11 +13,11 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.beeallrounder.R
-import com.example.beeallrounder.data.model.Beehive_snapshot
-import com.example.beeallrounder.data.viewmodel.UserViewModel
+import com.example.beeallrounder.data.oldDB.model.Beehive_snapshot
+import com.example.beeallrounder.data.oldDB.viewmodel.UserViewModelOld
 
 class DBAddFragment : Fragment() {
-    private lateinit var mUserViewModel: UserViewModel
+    private lateinit var mUserViewModel: UserViewModelOld
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +25,7 @@ class DBAddFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_d_b_add, container, false)
 
-        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        mUserViewModel = ViewModelProvider(this).get(UserViewModelOld::class.java)
         return view
     }
 

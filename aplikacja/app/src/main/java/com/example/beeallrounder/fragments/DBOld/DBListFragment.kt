@@ -1,25 +1,23 @@
-package com.example.beeallrounder.fragments.DB
+package com.example.beeallrounder.fragments.DBOld
 
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import android.widget.Button
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beeallrounder.R
-import com.example.beeallrounder.data.viewmodel.UserViewModel
+import com.example.beeallrounder.data.oldDB.viewmodel.UserViewModelOld
 import com.example.beeallrounder.list.ListAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class DBListFragment : Fragment() {
 
-    private lateinit var mUserViewModel : UserViewModel
+    private lateinit var mUserViewModelOld : UserViewModelOld
 
 
     override fun onCreateView(
@@ -36,8 +34,8 @@ class DBListFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         // user view model
-        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        mUserViewModel.readAllData.observe(viewLifecycleOwner, Observer {
+        mUserViewModelOld = ViewModelProvider(this).get(UserViewModelOld::class.java)
+        mUserViewModelOld.readAllData.observe(viewLifecycleOwner, Observer {
             user -> adapter.setData(user)
        })
 
@@ -69,7 +67,7 @@ class DBListFragment : Fragment() {
     private fun deleteAllRecords() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton(R.string.Yes) { _, _  ->
-            mUserViewModel.deleteAllRecords()
+            mUserViewModelOld.deleteAllRecords()
             Toast.makeText(requireContext(),R.string.SuccessfulyRemovedAll,
                 Toast.LENGTH_LONG).show()
 

@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.DB.DBAddFragment">
+    tools:context=".fragments.DBOld.DBAddFragment">
 
     <TextView
         android:id="@+id/DBAddRadioGroupPierzgaText"

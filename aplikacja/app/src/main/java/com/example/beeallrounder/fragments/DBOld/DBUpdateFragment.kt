@@ -1,4 +1,4 @@
-package com.example.beeallrounder.fragments.DB
+package com.example.beeallrounder.fragments.DBOld
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -12,13 +12,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.beeallrounder.R
-import com.example.beeallrounder.data.model.Beehive_snapshot
-import com.example.beeallrounder.data.viewmodel.UserViewModel
+import com.example.beeallrounder.data.oldDB.model.Beehive_snapshot
+import com.example.beeallrounder.data.oldDB.viewmodel.UserViewModelOld
 
 class DBUpdateFragment : Fragment() {
 
     private val args by navArgs<DBUpdateFragmentArgs>()
-    private lateinit var mUserViewModel: UserViewModel
+    private lateinit var mUserViewModel: UserViewModelOld
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +38,7 @@ class DBUpdateFragment : Fragment() {
         view.findViewById<Button>(R.id.btnDBUpdateRecordSend).setOnClickListener {
             updateItem()
         }
-        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        mUserViewModel = ViewModelProvider(this).get(UserViewModelOld::class.java)
 
         // add menu
         setHasOptionsMenu(true)
