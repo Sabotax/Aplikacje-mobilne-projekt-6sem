@@ -29,7 +29,6 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
 
     private var bleController: BLEController? = null
     private val remoteControl: RemoteBLEDeviceController? = null
-    private var deviceAddress: String? = null
 
     private lateinit var bluetoothManager: BluetoothManager
 
@@ -70,7 +69,8 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
         Manifest.permission.BLUETOOTH_PRIVILEGED
     )
 
-    private val devicesList = mutableListOf<Pair<String,String>?>()
+    //private val devicesList = mutableListOf<Pair<String,String>?>()
+    private val devicesList = mutableListOf<RemoteBLEDeviceController>()
     private var currentSpinnerOption: Int? = null
 
     override fun onCreateView(
@@ -109,7 +109,7 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
         btnConnect.setOnClickListener {
             if(currentSpinnerOption != null) {
                 log("attempting connection to $currentSpinnerOption")
-                val address = devicesList[currentSpinnerOption!!]?.second
+                val address = devicesList[currentSpinnerOption!!].deviceName
                 if (address == null) log("err2, z jakiegoś powodu adres urządzenia to null")
                 else
                     bleController?.connectToDevice(address)
@@ -225,11 +225,17 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
 
     override fun BLEDeviceFound(name: String, address: String) {
         fireLog("Device $name found with address $address")
-        //deviceAddress = address
-        devicesList.add(Pair(name,address))
-        setSpinnerOptions(devicesList.mapNotNull { it?.first })
+        devicesList.add(RemoteBLEDeviceController(name,address))
+        setSpinnerOptions(devicesList.map { it.deviceName })
         ButtonsController.btnConnect = true
         ButtonsController.flag = true
+    }
+
+    override fun BLEIncomingData(data: ByteArray?, device: String?) {
+        val device = devicesList.find { it.deviceAddress == device }
+        if(device != null) {
+            device.incomingDataQueue.add(data)
+        }
     }
 
     override fun onResume() {

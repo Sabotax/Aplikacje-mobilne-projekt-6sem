@@ -106,6 +106,17 @@ class BLEController {
             }
         }
 
+        override fun onCharacteristicChanged(
+            gatt: BluetoothGatt?,
+            characteristic: BluetoothGattCharacteristic?
+        ) {
+            super.onCharacteristicChanged(gatt, characteristic)
+
+            if(/*characteristic?.uuid.toString().uppercase() == "X"*/true) {
+                fireIncomingData(characteristic?.value,device?.address)
+            }
+        }
+
         override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
             if (null == btGattChar) {
                 for (service in gatt.services) {
@@ -116,6 +127,9 @@ class BLEController {
                             if (/*bgc.uuid.toString().uppercase(Locale.getDefault()).startsWith("0000FFE1")*/true) {
                                 fireLog("bgc ${service.uuid}")
                                 val chprop = bgc.properties
+                                //onCharacteristicChanged(gatt,bgc) pzrykładowe wywołanie,
+                                // w realu muszę zrobić żeby były dane o tej pożądanej (TX) charakterystyce i żeby w callbacku porównywało, czy
+                                // to ta się zmieniła co miała
                                 if (chprop and BluetoothGattCharacteristic.PROPERTY_WRITE or (chprop and BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) > 0) {
                                     btGattChar = bgc
                                     Log.i("[BLE]", "CONNECTED and ready to send")
@@ -147,7 +161,11 @@ class BLEController {
         for (l in listeners) l.BLEDeviceFound(device.name.trim { it <= ' ' }, device.address)
     }
 
-    fun sendData(data: ByteArray?) {
+    private fun fireIncomingData(data: ByteArray?,deviceAddress: String?) {
+        for (l in listeners) l.BLEIncomingData(data,deviceAddress)
+    }
+
+    fun sendData(data: ByteArray) {
         btGattChar!!.value = data
         bluetoothGatt!!.writeCharacteristic(btGattChar)
     }
