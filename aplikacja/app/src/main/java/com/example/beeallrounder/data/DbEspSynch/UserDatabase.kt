@@ -1,14 +1,13 @@
-package com.example.beeallrounder.data
+package com.example.beeallrounder.data.DbEspSynch
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.beeallrounder.data.model.Beehive_snapshot
+import com.example.beeallrounder.data.DbEspSynch.model.SensorRecord
 
-@Database(entities = [Beehive_snapshot::class], version = 1, exportSchema = false)
-abstract class UserDatabase : RoomDatabase() {
-
+@Database(entities = [SensorRecord::class], version = 1, exportSchema = false)
+abstract class UserDatabase: RoomDatabase() {
     abstract fun userDao() : UserDao
 
     companion object {
@@ -26,7 +25,7 @@ abstract class UserDatabase : RoomDatabase() {
                     UserDatabase::class.java,
                     "database"
                 ).build()
-                INSTANCE=instance
+                INSTANCE =instance
                 return instance
             }
         }
