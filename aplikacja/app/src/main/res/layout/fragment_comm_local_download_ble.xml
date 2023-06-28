@@ -80,13 +80,25 @@
         app:layout_constraintEnd_toEndOf="@+id/btnCommLocalDownloadBleConnect"
         app:layout_constraintTop_toBottomOf="@+id/btnCommLocalDownloadBleDisconnect" />
 
+    <Button
+        android:id="@+id/btnCommLocalDownloadBlePomiar"
+        android:layout_width="145dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="184dp"
+        android:enabled="false"
+        android:text="Pomiar"
+        app:layout_constraintEnd_toEndOf="@+id/btnCommLocalDownloadBleConnect"
+        app:layout_constraintTop_toBottomOf="@+id/btnCommLocalDownloadBleDisconnect" />
+
     <EditText
-        android:id="@+id/editTextDate"
+        android:id="@+id/inputDate"
         android:layout_width="168dp"
         android:layout_height="51dp"
         android:layout_marginStart="4dp"
         android:layout_marginBottom="140dp"
         android:ems="10"
+        android:hint="RRRR-MM-DD"
         android:inputType="date"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/spinner" />

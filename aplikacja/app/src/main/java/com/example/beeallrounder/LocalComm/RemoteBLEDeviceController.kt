@@ -5,11 +5,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.example.beeallrounder.databases.dbEspSynch.model.SensorRecord
 import com.example.beeallrounder.databases.dbEspSynch.viewmodel.UserViewModel
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 class RemoteBLEDeviceController(
     val deviceName: String,
     val deviceAddress: String,
-    private val app: ViewModelStoreOwner
+    private val app: ViewModelStoreOwner,
+    val bleController: BLEController
 ) {
     // nieaktualne, v1
     //ramka komunikacji (BLE ma max 512 bajtów): 6 bajtów na adres? | 1 bajt na typ instrukcji |
@@ -41,21 +44,23 @@ class RemoteBLEDeviceController(
     // od każdego urządzenia powinien być tworzony osobny obiekt a powinny być w fragmencie BLE przechowywane
 
     companion object {
-        enum class INSTRUCTION_TYPE_SENDING(val value: Byte) {
-            START_SENDING(1),
-            CONTINUE(2),
-            STOP(3)
+        enum class INSTRUCTION_TYPE_SENDING(val value: String) {
+            START_SENDING("1"),
+            CONTINUE("2"),
+            WYKONAJ_POMIAR("4"),
         }
 
-        enum class INSTRUCTION_TYPE_RECEIVING(val value: Byte) {
-            SENDING(1), // wysyłam dane
-            STOP(2), // koniec wysyłania
-            ERROR(3) // wydarzył się błąd w ESP
+        enum class INSTRUCTION_TYPE_RECEIVING(val value: String) {
+            HAVE_STARTED_SENDING("1"), // wysyłam dane
+            AM_CONTINUING_SENDING("2"), // wysyłam dane
+            STOP("3"), // koniec wysyłania
+            ERROR("5"), // wydarzył się błąd w ESP
+            POMIAR("4") // jednorazowy pomiar
         }
     }
 
     val incomingDataQueue: MutableList<ByteArray?> = mutableListOf()
-    val threadFlag = true
+    var threadFlag = true
 
     val dataToLogQueue: MutableList<String> = mutableListOf()
 
@@ -63,23 +68,36 @@ class RemoteBLEDeviceController(
     //mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java) żeby rozpocząć
 
     init{
-        execute()
+        executeReceiving()
     }
 
+    private fun dataToSensorRecord(decodedData: String): SensorRecord {
+        val splitted = decodedData.split(",")
+        val waga = splitted[1].toDoubleOrNull()
+        var czas: Long? = null
+        try {
+            czas = LocalDateTime.parse(splitted[2]).toEpochSecond(ZoneOffset.ofHours(2))
+        }
+        catch (e: Exception) {
+            dataToLogQueue.add("Błąd parsowania daty: ${splitted[2]}")
+        }
+        if(waga == null) dataToLogQueue.add("Błąd przy odczytywaniu wagi: ${splitted[1]}")
 
-    private fun decodeInstructionReceived(data: ByteArray): INSTRUCTION_TYPE_RECEIVING? {
-        return enumValues<INSTRUCTION_TYPE_RECEIVING>().find { it.value == data[0] }
+        return SensorRecord(
+            espId = splitted[0],
+            waga = splitted[1].toDoubleOrNull(),
+            timestampEsp = czas
+        )
     }
 
-    private fun decodePacketData(data: ByteArray): String {
-        return data.toString(Charsets.US_ASCII)
+    private fun addRow(row: SensorRecord) {
+        if(mUserViewModel == null) {
+            mUserViewModel = ViewModelProvider(app).get(UserViewModel::class.java)
+        }
+        mUserViewModel!!.addSensorRecord(row)
     }
 
-    private fun decodedDataToSensorRecord(decodedData: String): SensorRecord {
-        TODO()
-    }
-
-    fun execute() {
+    fun executeReceiving() {
         Thread {
             // czy thread się zamknie gdy obiekt zostanie usunięty?
             // dla pewności threadFlag ustawić na false w razie gdy po usunięciu z listy(czyli rozłączeniu) obiekt by wciąż żył i thread chodził
@@ -90,27 +108,34 @@ class RemoteBLEDeviceController(
                         //TODO nima danych error
                     }
                     else {
-                        val decodedInstruction = decodeInstructionReceived(dataItem)
-                        val dataWithoutInstruction = dataItem.slice(IntRange(1,dataItem.size-1)).toByteArray()
-                        when (decodedInstruction) {
-                            INSTRUCTION_TYPE_RECEIVING.SENDING -> {
-                                val decodedData = decodePacketData(dataWithoutInstruction)
-                                val row = decodedDataToSensorRecord(decodedData)
+                        val message = dataItem.toString(Charsets.US_ASCII)
+                        val instruction = enumValues<INSTRUCTION_TYPE_RECEIVING>().find { it.value == message.substringBefore("|") }
+                        val instructionData = message.substringAfter("|")
 
-                                if(mUserViewModel == null) {
-                                    mUserViewModel = ViewModelProvider(app).get(UserViewModel::class.java)
-                                }
-                                mUserViewModel!!.addSensorRecord(row)
+                        when (instruction) {
+                            INSTRUCTION_TYPE_RECEIVING.HAVE_STARTED_SENDING -> {
+                                sendData(INSTRUCTION_TYPE_SENDING.CONTINUE,"")
+                            }
+                            INSTRUCTION_TYPE_RECEIVING.AM_CONTINUING_SENDING -> {
+                                val row = dataToSensorRecord(instructionData)
+                                addRow(row)
+
+                                // send continue
+                                sendData(INSTRUCTION_TYPE_SENDING.CONTINUE,"")
                             }
                             INSTRUCTION_TYPE_RECEIVING.STOP -> {
-                                val day: String = TODO() // esp w danych ma przesłać który dzień właśnie skończyło wysyłać
-                                dataToLogQueue.add("Urządzenie $deviceName skończyło przesyłanie dnia $day")
-                                // wysyla logowanie że już koniec dla tego dnia
+                                val row = dataToSensorRecord(instructionData)
+                                addRow(row)
+                                dataToLogQueue.add("Urządzenie $deviceName skończyło przesyłanie dnia")
                             }
                             INSTRUCTION_TYPE_RECEIVING.ERROR -> {
-                                // log że error i wyjebalo :C z komunikatem z esp jak się da
-                                val errorMsg = TODO() // esp przesyła co się stało (jeśli obsłuży)
                                 dataToLogQueue.add("Wystąpił błąd na esp ")
+                            }
+                            INSTRUCTION_TYPE_RECEIVING.POMIAR -> {
+                                dataToLogQueue.add("Obecna waga na urządzeniu $deviceName wynosi $instructionData")
+                            }
+                            else -> {
+                                dataToLogQueue.add("Instrukcja nierozpoznana ")
                             }
                         }
                     }
@@ -122,7 +147,7 @@ class RemoteBLEDeviceController(
 
 
     fun prepareDataToSend(instruction: INSTRUCTION_TYPE_SENDING, data: String): ByteArray? { //będzie w pętli wysyłało prośby dzień po dniu
-        val packet = (listOf<Byte>(instruction.value) + data.map { it.code.toByte() }).toTypedArray().toByteArray()
+        val packet = "${instruction.value}|$data".toByteArray(Charsets.US_ASCII)
 
         if(packet.size > 500) {
             Log.e("BLE","data to send to big! size: ${packet.size}")
@@ -131,11 +156,13 @@ class RemoteBLEDeviceController(
 
         return packet
     }
-}
 
-//abstract class  LookableEnum<T> {
-//    protected abstract val value: T
-//    final fun <T> findFromValue(value: T) {
-//        enumValues<T>().find { it.value == x }
-//    }
-//}
+    fun sendData(instruction: INSTRUCTION_TYPE_SENDING,data: String) {
+        val preparedData = prepareDataToSend(instruction, data)
+        if(preparedData == null) {
+            dataToLogQueue.add("Nie udało się przygotować danych do wysyłki")
+            return
+        }
+        bleController.sendData(preparedData)
+    }
+}

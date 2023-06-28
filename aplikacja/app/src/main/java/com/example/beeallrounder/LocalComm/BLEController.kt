@@ -7,9 +7,7 @@ import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import java.util.*
-import kotlin.math.log
 
 
 class BLEController {
@@ -20,6 +18,10 @@ class BLEController {
             if (null == instance) instance = BLEController(ctx)
             return instance
         }
+
+        const val TX_UUID = "391150c1-8fe8-47f3-b045-9be85e40683b"
+        const val RX_UUID = "453a0b55-0417-4ee6-b458-83d3ff6fe054"
+        const val SERVICE_UUID = "a9a5d9db-1d47-44a6-84cb-a3d00cf2a25f"
     }
 
     private var scanner: BluetoothLeScanner? = null
@@ -27,7 +29,8 @@ class BLEController {
     private var bluetoothGatt: BluetoothGatt? = null
     private var bluetoothManager: BluetoothManager? = null
 
-    private var btGattChar: BluetoothGattCharacteristic? = null
+    private var btGattCharTX: BluetoothGattCharacteristic? = null
+    private var btGattCharRX: BluetoothGattCharacteristic? = null
 
     private val listeners: ArrayList<BLEControllerListener> = ArrayList()
     private val devices: HashMap<String, BluetoothDevice> = HashMap()
@@ -98,7 +101,8 @@ class BLEController {
                 // tymczasowo tutaj:
                 fireConnected()
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-                btGattChar = null
+                btGattCharTX = null
+                btGattCharRX = null
                 Log.w("[BLE]", "DISCONNECTED with status $status")
                 fireDisconnected()
             } else {
@@ -112,40 +116,57 @@ class BLEController {
         ) {
             super.onCharacteristicChanged(gatt, characteristic)
 
-            if(/*characteristic?.uuid.toString().uppercase() == "X"*/true) {
+            if(characteristic?.uuid.toString() == TX_UUID) {
+                // działa !!!!!!!!! characteristic.value.toString(Charsets.US_ASCII)
                 fireIncomingData(characteristic?.value,device?.address)
             }
         }
 
         override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
-            if (null == btGattChar) {
+            var byla_potrzeba_przypisania = false
+
+            var TX_przypisano = false
+            if(btGattCharTX == null) {
+                byla_potrzeba_przypisania = true
                 for (service in gatt.services) {
-                    if (/*service.uuid.toString().uppercase(Locale.getDefault()).startsWith("0000FFE0")*/true) {
-                        val gattCharacteristics = service.characteristics
-                        fireLog("service ${service.uuid}")
-                        for (bgc in gattCharacteristics) {
-                            if (/*bgc.uuid.toString().uppercase(Locale.getDefault()).startsWith("0000FFE1")*/true) {
-                                fireLog("bgc ${service.uuid}")
-                                val chprop = bgc.properties
-                                //onCharacteristicChanged(gatt,bgc) pzrykładowe wywołanie,
-                                // w realu muszę zrobić żeby były dane o tej pożądanej (TX) charakterystyce i żeby w callbacku porównywało, czy
-                                // to ta się zmieniła co miała
-                                if (chprop and BluetoothGattCharacteristic.PROPERTY_WRITE or (chprop and BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) > 0) {
-                                    btGattChar = bgc
-                                    Log.i("[BLE]", "CONNECTED and ready to send")
-                                    sendData(ByteArray(255))
-                                    fireConnected()
-                                }
+                    if (service.uuid.toString() == SERVICE_UUID) {
+                        for (bgc in service.characteristics) {
+                            if(bgc.uuid.toString() == TX_UUID) {
+                                btGattCharTX = bgc
+                                TX_przypisano = true
+                                fireLog("Charakterystyka TX znaleziona")
+
+                                bluetoothGatt?.setCharacteristicNotification(btGattCharTX,true)
                             }
                         }
                     }
                 }
             }
+
+            var RX_przypisano = false
+            if(btGattCharRX == null) {
+                byla_potrzeba_przypisania = true
+                for (service in gatt.services) {
+                    if (service.uuid.toString() == SERVICE_UUID) {
+                        for (bgc in service.characteristics) {
+                            if(bgc.uuid.toString() == RX_UUID) {
+                                btGattCharRX = bgc
+                                RX_przypisano = true
+                                fireLog("Charakterystyka RX znaleziona")
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(TX_przypisano && RX_przypisano && byla_potrzeba_przypisania) {
+                fireConnected()
+            }
         }
     }
 
     private fun fireDisconnected() {
-        for (l in listeners) l.BLEControllerDisconnected()
+        for (l in listeners) l.BLEControllerDisconnected(device!!.address)
         device = null
     }
 
@@ -166,8 +187,8 @@ class BLEController {
     }
 
     fun sendData(data: ByteArray) {
-        btGattChar!!.value = data
-        bluetoothGatt!!.writeCharacteristic(btGattChar)
+        btGattCharRX!!.value = data
+        bluetoothGatt!!.writeCharacteristic(btGattCharRX)
     }
 
     fun checkConnectedState(): Boolean {

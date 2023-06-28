@@ -35,6 +35,8 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
     private lateinit var btnConnect: Button
     private lateinit var btnDisconnect: Button
     private lateinit var btnSynch: Button
+    private lateinit var btnPomiar: Button
+    private lateinit var inputDate: EditText
 
     private lateinit var spinner: Spinner
 
@@ -43,7 +45,9 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
         var btnScan: Boolean = true
         var btnConnect: Boolean = false
         var btnDisconnect: Boolean = false
-        val btnSynch: Boolean = false
+        var btnSynch: Boolean = false
+        var btnPomiar: Boolean = false
+        var spinner: Boolean = true
     }
 
     private val queueToLog: MutableList<String> = mutableListOf()
@@ -98,6 +102,8 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
 
         logView = view.findViewById<TextView>(R.id.logViewCommLocalDownloadBle)
 
+        inputDate = view.findViewById(R.id.inputDate)
+
         btnScan = view.findViewById<Button>(R.id.btnCommLocalDownloadBleScan)
         btnScan.setOnClickListener {
             scanResume()
@@ -107,7 +113,7 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
         btnConnect.setOnClickListener {
             if(currentSpinnerOption != null) {
                 log("attempting connection to $currentSpinnerOption")
-                val address = devicesList[currentSpinnerOption!!].deviceName
+                val address = devicesList[currentSpinnerOption!!].deviceAddress
                 if (address == null) log("err2, z jakiegoś powodu adres urządzenia to null")
                 else
                     bleController?.connectToDevice(address)
@@ -118,6 +124,7 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
 
 
         }
+        // TODO connect blokuje zmiany spinnera dopóki nie będzie disconnect
 
         btnDisconnect = view.findViewById<Button>(R.id.btnCommLocalDownloadBleDisconnect)
         btnDisconnect.setOnClickListener {
@@ -127,9 +134,28 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
 
         btnSynch = view.findViewById<Button>(R.id.btnCommLocalDownloadBleSynch)
         btnSynch.setOnClickListener {
-            //Toast.makeText(requireContext(),"synch",Toast.LENGTH_LONG).show()
-            //log("synch")
-            log("todo")
+            if(!inputDate.text.matches(Regex("^\\d{4}-\\d{1,2}-\\d{1,2}\$"))) {
+                log("Zły format daty")
+            }
+            else {
+                if(currentSpinnerOption != null) {
+                    devicesList[currentSpinnerOption!!].sendData(
+                        RemoteBLEDeviceController.Companion.INSTRUCTION_TYPE_SENDING.START_SENDING,
+                        inputDate.text.toString()
+                    )
+                }
+            }
+        }
+
+        btnPomiar = view.findViewById<Button>(R.id.btnCommLocalDownloadBlePomiar)
+        btnPomiar.setOnClickListener {
+            log("Wykonuję pomiar")
+            if(currentSpinnerOption != null) {
+                devicesList[currentSpinnerOption!!].sendData(
+                    RemoteBLEDeviceController.Companion.INSTRUCTION_TYPE_SENDING.WYKONAJ_POMIAR,
+                    ""
+                )
+            }
         }
 
         spinner = view.findViewById(R.id.spinner)
@@ -137,31 +163,34 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
         Thread{
             //update UI base on backend thread input
             while(true) {
-
-                while (queueToLog.isNotEmpty()) {
-                    val s = queueToLog.removeFirstOrNull()
-                    if (s != null) activity?.runOnUiThread {
-                        log(s)
+                activity?.runOnUiThread {
+                    while (queueToLog.isNotEmpty()) {
+                        val s = queueToLog.removeFirstOrNull()
+                        if (s != null) activity?.runOnUiThread {
+                            log(s)
+                        }
                     }
-                }
 
-                if (ButtonsController.flag) {
-                    activity?.runOnUiThread {
+                    if (ButtonsController.flag) {
+
                         btnScan.isEnabled = ButtonsController.btnScan
                         btnConnect.isEnabled = ButtonsController.btnConnect
                         btnDisconnect.isEnabled = ButtonsController.btnDisconnect
                         btnSynch.isEnabled = ButtonsController.btnSynch
-                    }
-                    ButtonsController.flag = false
-                }
+                        btnPomiar.isEnabled = ButtonsController.btnPomiar
+                        spinner.isEnabled = ButtonsController.spinner
 
-                while (devicesList.any { it.dataToLogQueue.isNotEmpty() }) {
-                    devicesList.forEach {
-                        log(it.dataToLogQueue.removeFirst())
+                        ButtonsController.flag = false
+                    }
+
+                    while (devicesList.any { it.dataToLogQueue.isNotEmpty() }) {
+                        devicesList.forEach {
+                            log(it.dataToLogQueue.removeFirst())
+                        }
                     }
                 }
+                    Thread.sleep(500)
 
-                Thread.sleep(500)
             }
         }.start()
 
@@ -220,20 +249,30 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
         fireLog("[BLE]\tConnected")
         ButtonsController.btnDisconnect = true
         ButtonsController.btnScan = false
+        ButtonsController.btnSynch = true
+        ButtonsController.btnPomiar = true
+        ButtonsController.spinner = false
         ButtonsController.flag = true
     }
 
-    override fun BLEControllerDisconnected() {
+    override fun BLEControllerDisconnected(address: String) {
         fireLog("[BLE]\tDisconnected")
-        // TODO usunąć z listy ten item, a przed tym ustawić na nim flage thread na false
+
+        val el = devicesList.find { it.deviceAddress == address }
+        el?.threadFlag = false
+        devicesList.remove(el)
+
         ButtonsController.btnScan = true
         ButtonsController.btnConnect = false
+        ButtonsController.btnSynch = false
+        ButtonsController.btnPomiar = false
+        ButtonsController.spinner = true
         ButtonsController.flag = true
     }
 
     override fun BLEDeviceFound(name: String, address: String) {
         fireLog("Device $name found with address $address")
-        devicesList.add(RemoteBLEDeviceController(name,address,this)) // złe przeczucia co do tego
+        devicesList.add(RemoteBLEDeviceController(name,address,this,bleController!!))
         setSpinnerOptions(devicesList.map { it.deviceName })
         ButtonsController.btnConnect = true
         ButtonsController.flag = true
