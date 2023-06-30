@@ -7,6 +7,7 @@ import com.example.beeallrounder.databases.dbEspSynch.model.SensorRecord
 import com.example.beeallrounder.databases.dbEspSynch.viewmodel.UserViewModel
 import java.time.LocalDateTime
 import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 class RemoteBLEDeviceController(
     val deviceName: String,
@@ -55,7 +56,8 @@ class RemoteBLEDeviceController(
             AM_CONTINUING_SENDING("2"), // wysyłam dane
             STOP("3"), // koniec wysyłania
             ERROR("5"), // wydarzył się błąd w ESP
-            POMIAR("4") // jednorazowy pomiar
+            POMIAR("4"), // jednorazowy pomiar
+            STOP_EMPTY("6")
         }
     }
 
@@ -76,7 +78,9 @@ class RemoteBLEDeviceController(
         val waga = splitted[1].toDoubleOrNull()
         var czas: Long? = null
         try {
-            czas = LocalDateTime.parse(splitted[2]).toEpochSecond(ZoneOffset.ofHours(2))
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
+            val datetime = LocalDateTime.parse(splitted[2], formatter)
+            czas = datetime.toEpochSecond(ZoneOffset.ofHours(2))
         }
         catch (e: Exception) {
             dataToLogQueue.add("Błąd parsowania daty: ${splitted[2]}")
@@ -133,6 +137,9 @@ class RemoteBLEDeviceController(
                             }
                             INSTRUCTION_TYPE_RECEIVING.POMIAR -> {
                                 dataToLogQueue.add("Obecna waga na urządzeniu $deviceName wynosi $instructionData")
+                            }
+                            INSTRUCTION_TYPE_RECEIVING.STOP_EMPTY -> {
+                                dataToLogQueue.add("Urządzenie $deviceName skończyło przesyłanie dnia")
                             }
                             else -> {
                                 dataToLogQueue.add("Instrukcja nierozpoznana ")

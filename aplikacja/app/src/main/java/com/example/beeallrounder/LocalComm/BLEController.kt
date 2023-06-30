@@ -119,6 +119,12 @@ class BLEController {
             if(characteristic?.uuid.toString() == TX_UUID) {
                 // działa !!!!!!!!! characteristic.value.toString(Charsets.US_ASCII)
                 fireIncomingData(characteristic?.value,device?.address)
+                // TODO protokół BLE przesyła max 20 bajtów na raz
+                // epoch Time (long) można zmieścić w 4 bajtach (do 2038 roku przynajmniej)
+                // następnie id bierzemy z urządzenia itp
+                // waga może być zmieszczona w uint8_t,uint8_t
+                // rozkaz tak samo, starczy jeden uint8_t
+                // zostaje użyte w ten sposób 7 bajtów, zamiast niemieszczenia się wczesniej stringa
             }
         }
 
