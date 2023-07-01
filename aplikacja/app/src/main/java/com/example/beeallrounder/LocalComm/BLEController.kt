@@ -52,7 +52,7 @@ class BLEController {
         scanner = bluetoothManager!!.adapter.bluetoothLeScanner // tu jest null
         fireLog( "skanuje")
         if(scanner == null) fireLog("scanner jest null")
-        scanner!!.startScan(bleCallback)
+        scanner!!.startScan(bleCallback) // tu wywala jak nie ma ble właczonego TODO
     }
 
     private val bleCallback: ScanCallback = object : ScanCallback() {
@@ -125,6 +125,10 @@ class BLEController {
                 // waga może być zmieszczona w uint8_t,uint8_t
                 // rozkaz tak samo, starczy jeden uint8_t
                 // zostaje użyte w ten sposób 7 bajtów, zamiast niemieszczenia się wczesniej stringa
+
+                // z stringa 2|esp01,88.00,2023-06-30T01:09:58
+                // zostaje 2|esp01,88.00,2023-0
+                // maksymalnie 20 znaków
             }
         }
 

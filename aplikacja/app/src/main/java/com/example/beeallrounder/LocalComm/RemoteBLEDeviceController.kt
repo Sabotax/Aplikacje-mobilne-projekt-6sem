@@ -1,6 +1,7 @@
 package com.example.beeallrounder.LocalComm
 
 import android.util.Log
+import androidx.core.os.persistableBundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import com.example.beeallrounder.databases.dbEspSynch.model.SensorRecord
@@ -8,6 +9,8 @@ import com.example.beeallrounder.databases.dbEspSynch.viewmodel.UserViewModel
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import java.time.Instant
+import java.time.ZoneId
 
 class RemoteBLEDeviceController(
     val deviceName: String,
@@ -51,13 +54,13 @@ class RemoteBLEDeviceController(
             WYKONAJ_POMIAR("4"),
         }
 
-        enum class INSTRUCTION_TYPE_RECEIVING(val value: String) {
-            HAVE_STARTED_SENDING("1"), // wysyłam dane
-            AM_CONTINUING_SENDING("2"), // wysyłam dane
-            STOP("3"), // koniec wysyłania
-            ERROR("5"), // wydarzył się błąd w ESP
-            POMIAR("4"), // jednorazowy pomiar
-            STOP_EMPTY("6")
+        enum class INSTRUCTION_TYPE_RECEIVING(val value: Int) {
+            HAVE_STARTED_SENDING(1), // wysyłam dane
+            AM_CONTINUING_SENDING(2), // wysyłam dane
+            STOP(3), // koniec wysyłania
+            ERROR(5), // wydarzył się błąd w ESP
+            POMIAR(4), // jednorazowy pomiar
+            STOP_EMPTY(6)
         }
     }
 
@@ -73,24 +76,11 @@ class RemoteBLEDeviceController(
         executeReceiving()
     }
 
-    private fun dataToSensorRecord(decodedData: String): SensorRecord {
-        val splitted = decodedData.split(",")
-        val waga = splitted[1].toDoubleOrNull()
-        var czas: Long? = null
-        try {
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
-            val datetime = LocalDateTime.parse(splitted[2], formatter)
-            czas = datetime.toEpochSecond(ZoneOffset.ofHours(2))
-        }
-        catch (e: Exception) {
-            dataToLogQueue.add("Błąd parsowania daty: ${splitted[2]}")
-        }
-        if(waga == null) dataToLogQueue.add("Błąd przy odczytywaniu wagi: ${splitted[1]}")
-
+    private fun dataToSensorRecord(decodedData: ReceivedMsg): SensorRecord {
         return SensorRecord(
-            espId = splitted[0],
-            waga = splitted[1].toDoubleOrNull(),
-            timestampEsp = czas
+            espId = deviceName,
+            waga = decodedData.msgWaga,
+            timestampEsp = decodedData.msgTime
         )
     }
 
@@ -99,6 +89,44 @@ class RemoteBLEDeviceController(
             mUserViewModel = ViewModelProvider(app).get(UserViewModel::class.java)
         }
         mUserViewModel!!.addSensorRecord(row)
+    }
+
+    fun decodeMsgToData(msg: ByteArray): ReceivedMsg? {
+        val rozkaz = msg[0].toInt()
+        when(rozkaz) {
+            2,3 -> {
+                val calkowite = msg[1].toInt()
+                val ulamki = msg[2].toInt()
+                val waga = "$calkowite.$ulamki".toDoubleOrNull()
+
+                val epochSeconds: Long =
+                    ((msg[6].toLong() and 0xFF) shl 24) or
+                            ((msg[5].toLong() and 0xFF) shl 16) or
+                            ((msg[4].toLong() and 0xFF) shl 8) or
+                            (msg[3].toLong() and 0xFF)
+
+                //val epochTime = Instant.ofEpochSecond(epochSeconds).atZone(ZoneId.systemDefault()).toLocalDateTime()
+
+                return ReceivedMsg(
+                    enumValues<INSTRUCTION_TYPE_RECEIVING>().find { it.value == rozkaz },
+                    null,
+                    waga,
+                    epochSeconds
+                )
+            }
+            1,4,5,6 -> {
+                return ReceivedMsg(
+                    enumValues<INSTRUCTION_TYPE_RECEIVING>().find { it.value == rozkaz },
+                    if(msg.size>1) msg.copyOfRange(1,msg.size-1).toString(Charsets.US_ASCII) else "",
+                    null,
+                    null
+                )
+            }
+            else -> {
+                dataToLogQueue.add("Nie rozpoznano odebranego rozkazu i danych")
+                return null
+            }
+        }
     }
 
     fun executeReceiving() {
@@ -112,39 +140,38 @@ class RemoteBLEDeviceController(
                         //TODO nima danych error
                     }
                     else {
-                        val message = dataItem.toString(Charsets.US_ASCII)
-                        val instruction = enumValues<INSTRUCTION_TYPE_RECEIVING>().find { it.value == message.substringBefore("|") }
-                        val instructionData = message.substringAfter("|")
+                        val message = decodeMsgToData(dataItem)
 
-                        when (instruction) {
-                            INSTRUCTION_TYPE_RECEIVING.HAVE_STARTED_SENDING -> {
-                                sendData(INSTRUCTION_TYPE_SENDING.CONTINUE,"")
-                            }
-                            INSTRUCTION_TYPE_RECEIVING.AM_CONTINUING_SENDING -> {
-                                val row = dataToSensorRecord(instructionData)
-                                addRow(row)
+                        if(message != null)
+                            when (message.instruction) {
+                                INSTRUCTION_TYPE_RECEIVING.HAVE_STARTED_SENDING -> {
+                                    sendData(INSTRUCTION_TYPE_SENDING.CONTINUE,"")
+                                }
+                                INSTRUCTION_TYPE_RECEIVING.AM_CONTINUING_SENDING -> {
+                                    val row = dataToSensorRecord(message)
+                                    addRow(row)
 
-                                // send continue
-                                sendData(INSTRUCTION_TYPE_SENDING.CONTINUE,"")
+                                    // send continue
+                                    sendData(INSTRUCTION_TYPE_SENDING.CONTINUE,"")
+                                }
+                                INSTRUCTION_TYPE_RECEIVING.STOP -> {
+                                    val row = dataToSensorRecord(message)
+                                    addRow(row)
+                                    dataToLogQueue.add("Urządzenie $deviceName skończyło przesyłanie dnia")
+                                }
+                                INSTRUCTION_TYPE_RECEIVING.ERROR -> {
+                                    dataToLogQueue.add("Wystąpił błąd na esp ")
+                                }
+                                INSTRUCTION_TYPE_RECEIVING.POMIAR -> {
+                                    dataToLogQueue.add("Obecna waga na urządzeniu $deviceName wynosi ${message.msgString}")
+                                }
+                                INSTRUCTION_TYPE_RECEIVING.STOP_EMPTY -> {
+                                    dataToLogQueue.add("Urządzenie $deviceName skończyło przesyłanie dnia")
+                                }
+                                else -> {
+                                    dataToLogQueue.add("Instrukcja nierozpoznana ")
+                                }
                             }
-                            INSTRUCTION_TYPE_RECEIVING.STOP -> {
-                                val row = dataToSensorRecord(instructionData)
-                                addRow(row)
-                                dataToLogQueue.add("Urządzenie $deviceName skończyło przesyłanie dnia")
-                            }
-                            INSTRUCTION_TYPE_RECEIVING.ERROR -> {
-                                dataToLogQueue.add("Wystąpił błąd na esp ")
-                            }
-                            INSTRUCTION_TYPE_RECEIVING.POMIAR -> {
-                                dataToLogQueue.add("Obecna waga na urządzeniu $deviceName wynosi $instructionData")
-                            }
-                            INSTRUCTION_TYPE_RECEIVING.STOP_EMPTY -> {
-                                dataToLogQueue.add("Urządzenie $deviceName skończyło przesyłanie dnia")
-                            }
-                            else -> {
-                                dataToLogQueue.add("Instrukcja nierozpoznana ")
-                            }
-                        }
                     }
                 }
                 Thread.sleep(100)
@@ -153,7 +180,7 @@ class RemoteBLEDeviceController(
     }
 
 
-    fun prepareDataToSend(instruction: INSTRUCTION_TYPE_SENDING, data: String): ByteArray? { //będzie w pętli wysyłało prośby dzień po dniu
+    fun prepareDataToSend(instruction: INSTRUCTION_TYPE_SENDING, data: String): ByteArray? {
         val packet = "${instruction.value}|$data".toByteArray(Charsets.US_ASCII)
 
         if(packet.size > 500) {
@@ -173,3 +200,10 @@ class RemoteBLEDeviceController(
         bleController.sendData(preparedData)
     }
 }
+
+data class ReceivedMsg(
+    val instruction: RemoteBLEDeviceController.Companion.INSTRUCTION_TYPE_RECEIVING?,
+    val msgString: String?,
+    val msgWaga: Double?,
+    val msgTime: Long?
+)
