@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_DBMainFragment_to_DBListFragment"
             app:destination="@id/DBListFragment" />
+        <action
+            android:id="@+id/action_DBMainFragment_to_DBWykres"
+            app:destination="@id/DBWykres" />
     </fragment>
     <fragment
         android:id="@+id/commMainFragment"
@@ -97,5 +100,14 @@
         <action
             android:id="@+id/action_commLocalDownloadBle_to_commMainFragment"
             app:destination="@id/commMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/DBWykres"
+        android:name="com.example.beeallrounder.fragments.DB.DBWykresFragment"
+        android:label="fragment_d_b_wykres"
+        tools:layout="@layout/fragment_d_b_wykres" >
+        <action
+            android:id="@+id/action_DBWykres_to_DBMainFragment"
+            app:destination="@id/DBMainFragment" />
     </fragment>
 </navigation>

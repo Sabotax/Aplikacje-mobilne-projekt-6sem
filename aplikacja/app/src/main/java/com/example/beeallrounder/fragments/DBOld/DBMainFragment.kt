@@ -26,5 +26,10 @@ class DBMainFragment : Fragment() {
         btnDBMainToDBList.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_DBMainFragment_to_DBListFragment)
         }
+
+        val btnDBMainToDBWykres = view.findViewById<Button>(R.id.btnDBMainToDBWykres)
+        btnDBMainToDBWykres.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_DBMainFragment_to_DBWykres)
+        }
     }
 }
