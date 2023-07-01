@@ -8,7 +8,7 @@
     <string name="fragmentDBMainLabel">DB menu główne</string>
     <string name="fragmentCommMainLabel">Menu główne łączności</string>
     <string name="btnDBAddRecordSend">Dodaj</string>
-    <string name="btnDBMainToDBList">Pokaż rekordy</string>
+    <string name="btnDBMainToDBList">baza notatnikowa</string>
     <string name="radioDBAddYes">Tak</string>
     <string name="radioDBAddNo">Nie</string>
     <string name="radioGroupDBAddZachowanie">Zachowanie</string>
@@ -37,7 +37,7 @@
     <string name="DBAddRadioGroupMiodZasklepionyText">Miód zasklepiony</string>
     <string name="DBAddRadioGroupPierzgaText">Pierzga</string>
     <string name="ToastSuccessfulyAddedSnapshot">Pomyślnie dodano rekord</string>
-    <string name="btnCommMainLocalDownloadText">Pobierz z lokalnego esp</string>
+    <string name="btnCommMainLocalDownloadText">Pobieranie TCP/IP</string>
     <string name="btnCommLocalDownloadConnect">Połącz z esp</string>
     <string name="btnCommLocalDownloadDownloadAll">Pobierz wszystkie dane</string>
     <string name="btnCommLocalDownloadDownloadNew">Pobierz nowe dane</string>
