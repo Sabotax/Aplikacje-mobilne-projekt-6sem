@@ -2,6 +2,7 @@ package com.example.beeallrounder.databases.dbEspSynch.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.beeallrounder.databases.dbEspSynch.UserDatabase
 import com.example.beeallrounder.databases.dbEspSynch.model.SensorRecord
@@ -21,5 +22,9 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addSensorRecord(sensorRecord)
         }
+    }
+
+    fun readBetween(timeFrom: Long, timeTo: Long): LiveData<List<SensorRecord>> {
+        return repository.readBetween(timeFrom,timeTo)
     }
 }
