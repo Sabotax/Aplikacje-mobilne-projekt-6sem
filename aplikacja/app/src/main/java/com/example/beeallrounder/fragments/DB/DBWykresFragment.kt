@@ -11,14 +11,17 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.beeallrounder.R
 import com.example.beeallrounder.databases.dbEspSynch.viewmodel.UserViewModel
+import com.example.beeallrounder.fragments.round
 import com.example.beeallrounder.fragments.toast
 import com.jjoe64.graphview.GraphView
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.*
-import java.util.logging.Logger
+import kotlin.math.round
 
 
 class DBWykresFragment : Fragment(),AdapterView.OnItemSelectedListener {
@@ -54,6 +57,14 @@ class DBWykresFragment : Fragment(),AdapterView.OnItemSelectedListener {
 
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
+//        mUserViewModel.addSensorRecord(
+//            SensorRecord(
+//                espId = "esp01",
+//                waga = 20.1,
+//                timestampEsp = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)
+//            )
+//        )
+
 
         val spinnerObserver = Observer<List<String>> { list ->
             spinnerOptions = list
@@ -87,6 +98,14 @@ class DBWykresFragment : Fragment(),AdapterView.OnItemSelectedListener {
                                 DataPoint(Date(it.timestampEsp),it.waga)
                         }.toTypedArray()
                     )
+                    series.isDrawDataPoints = true
+                    series.dataPointsRadius = 10F
+                    series.thickness = 8
+                    series.setOnDataPointTapListener { series, dataPoint ->
+                        requireActivity().toast("Czas: ${LocalDateTime.ofEpochSecond(dataPoint.x.toLong(),0,
+                            ZoneOffset.of("+2"))} \nWaga: ${dataPoint.y.round(2) }")
+                    }
+                    graph.gridLabelRenderer.labelFormatter = DateAsXAxisLabelFormatter(activity);
                     graph.addSeries(series)
                 }
             }

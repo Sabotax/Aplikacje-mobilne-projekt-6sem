@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.navigation.Navigation
 import com.example.beeallrounder.R
+import kotlin.math.round
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -83,3 +84,9 @@ class MainFragment : Fragment() {
 
 fun Context.toast(message: String) =
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
+fun Double.round(decimals: Int): Double {
+    var multiplier = 1.0
+    repeat(decimals) { multiplier *= 10 }
+    return round(this * multiplier) / multiplier
+}
