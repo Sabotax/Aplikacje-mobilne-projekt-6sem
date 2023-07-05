@@ -1,14 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout9"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DBWykres">
+    tools:context="fragments.DB.DBWykresFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/DBWykresPlot"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="200dip"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/DBWykresInputDateTo"
+        android:layout_width="148dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="116dp"
+        android:layout_marginEnd="20dp"
+        android:ems="10"
+        android:hint="RRRR-MM-DD"
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DBWykresPlot" />
+
+    <TextView
+        android:id="@+id/DBWykresTextDateFrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Od"
+        app:layout_constraintBottom_toTopOf="@+id/DBWykresInputDateFrom"
+        app:layout_constraintStart_toStartOf="@+id/DBWykresInputDateFrom" />
+
+    <TextView
+        android:id="@+id/DBWykresTextDateFrom2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ID urządzenia"
+        app:layout_constraintBottom_toTopOf="@+id/DBWykresIDSpinner"
+        app:layout_constraintStart_toStartOf="@+id/DBWykresIDSpinner" />
+
+    <EditText
+        android:id="@+id/DBWykresInputDateFrom"
+        android:layout_width="148dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="116dp"
+        android:ems="10"
+        android:hint="RRRR-MM-DD"
+        android:inputType="date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DBWykresPlot" />
+
+    <TextView
+        android:id="@+id/DBWykresTextDateTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Do"
+        app:layout_constraintBottom_toTopOf="@+id/DBWykresInputDateTo"
+        app:layout_constraintStart_toStartOf="@+id/DBWykresInputDateTo" />
+
+    <Button
+        android:id="@+id/DBWykresBtnShow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Pokaż"
+        app:layout_constraintStart_toStartOf="@+id/DBWykresInputDateTo"
+        app:layout_constraintTop_toBottomOf="@+id/DBWykresInputDateTo" />
+
+    <Spinner
+        android:id="@+id/DBWykresIDSpinner"
+        android:layout_width="125dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="44dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DBWykresPlot" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

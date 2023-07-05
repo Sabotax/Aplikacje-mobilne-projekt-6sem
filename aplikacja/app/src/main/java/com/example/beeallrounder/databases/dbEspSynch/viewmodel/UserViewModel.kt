@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import androidx.room.RoomDatabase
 import com.example.beeallrounder.databases.dbEspSynch.UserDatabase
 import com.example.beeallrounder.databases.dbEspSynch.model.SensorRecord
 import com.example.beeallrounder.databases.dbEspSynch.repository.UserRepository
@@ -12,9 +13,11 @@ import kotlinx.coroutines.launch
 
 class UserViewModel(application: Application): AndroidViewModel(application) {
     private val repository: UserRepository
+    val database: UserDatabase
 
     init {
-        val userDao = UserDatabase.getDatabase(application).userDao()
+        database = UserDatabase.getDatabase(application)
+        val userDao = database.userDao()
         repository = UserRepository(userDao)
     }
 
@@ -24,7 +27,29 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun readBetween(timeFrom: Long, timeTo: Long): LiveData<List<SensorRecord>> {
-        return repository.readBetween(timeFrom,timeTo)
+    fun readBetween(espId: String,timeFrom: Long, timeTo: Long): LiveData<List<SensorRecord>> {
+        return repository.readBetween(espId,timeFrom,timeTo)
+    }
+
+    fun getEspList(): LiveData<List<String>> {
+        return repository.getEspList()
+    }
+
+    fun insertIfNotExist(sensorRecord: SensorRecord) {
+        val query = """
+           INSERT INTO SensorRecord (espId, waga, timestampEsp)
+           VALUES (${sensorRecord.id}, ${sensorRecord.waga}, ${sensorRecord.timestampEsp})
+           WHERE NOT EXISTS ( SELECT * FROM SensorRecord 
+               WHERE waga = ${sensorRecord.waga}
+               AND timestampEsp = ${sensorRecord.timestampEsp}
+           );
+        """.trimIndent()
+        executeSQL(query)
+    }
+
+    private fun executeSQL(query: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            database.openHelper.writableDatabase.execSQL(query)
+        }
     }
 }

@@ -9,7 +9,11 @@ class UserRepository(private val userDao: UserDao) {
         userDao.addSensorRecord(sensorRecord)
     }
 
-    fun readBetween(timeFrom: Long, timeTo: Long) : LiveData<List<SensorRecord>> {
-        return userDao.readBetween(timeFrom,timeTo)
+    fun readBetween(espId: String,timeFrom: Long, timeTo: Long) : LiveData<List<SensorRecord>> {
+        return userDao.readBetween(espId,timeFrom,timeTo)
+    }
+
+    fun getEspList(): LiveData<List<String>> {
+        return userDao.getEspList()
     }
 }
