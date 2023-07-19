@@ -52,6 +52,8 @@ class RemoteBLEDeviceController(
             START_SENDING("1"),
             CONTINUE("2"),
             WYKONAJ_POMIAR("4"),
+            SET_OFFSET("7"),
+            SET_SCALE("8")
         }
 
         enum class INSTRUCTION_TYPE_RECEIVING(val value: Int) {
@@ -60,7 +62,9 @@ class RemoteBLEDeviceController(
             STOP(3), // koniec wysyłania
             ERROR(5), // wydarzył się błąd w ESP
             POMIAR(4), // jednorazowy pomiar
-            STOP_EMPTY(6)
+            STOP_EMPTY(6),
+            OFFSET_SET_SUCCESS(7),
+            SCALE_SET_SUCCESS(8),
         }
     }
 
@@ -122,6 +126,22 @@ class RemoteBLEDeviceController(
                     null
                 )
             }
+            7 -> {
+                return ReceivedMsg(
+                    enumValues<INSTRUCTION_TYPE_RECEIVING>().find { it.value == rozkaz },
+                    if(msg.size>1) msg.copyOfRange(1,msg.size-1).toString(Charsets.US_ASCII) else "",
+                    null,
+                    null
+                )
+            }
+            8 -> {
+                return ReceivedMsg(
+                    enumValues<INSTRUCTION_TYPE_RECEIVING>().find { it.value == rozkaz },
+                    if(msg.size>1) msg.copyOfRange(1,msg.size-1).toString(Charsets.US_ASCII) else "",
+                    null,
+                    null
+                )
+            }
             else -> {
                 dataToLogQueue.add("Nie rozpoznano odebranego rozkazu i danych")
                 return null
@@ -168,6 +188,12 @@ class RemoteBLEDeviceController(
                                 INSTRUCTION_TYPE_RECEIVING.STOP_EMPTY -> {
                                     dataToLogQueue.add("Urządzenie $deviceName skończyło przesyłanie dnia")
                                 }
+                                INSTRUCTION_TYPE_RECEIVING.OFFSET_SET_SUCCESS -> {
+                                    dataToLogQueue.add("Pomyślnie ustawiono offset")
+                                }
+                                INSTRUCTION_TYPE_RECEIVING.SCALE_SET_SUCCESS -> {
+                                    dataToLogQueue.add("Pomyślnie ustawiono scale")
+                                }
                                 else -> {
                                     dataToLogQueue.add("Instrukcja nierozpoznana ")
                                 }
@@ -207,3 +233,9 @@ data class ReceivedMsg(
     val msgWaga: Double?,
     val msgTime: Long?
 )
+
+// TODO do ble fragment dać spinner przełączający dwa ostatnie wiersze buttonów na dole na kategorie typu:
+//  1. synchro plików z dat
+//  2. pomiar i ustawianie scale itp
+
+// TODO oprócz tego naprawić przewijanie loga (tekstu w nim) i zmnniejszyć wysokosc zeby wiecej miejsca na dole bylo
