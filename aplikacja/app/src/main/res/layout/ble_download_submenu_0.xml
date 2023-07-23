@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--https://stackoverflow.com/questions/1759099/how-to-specify-id-when-uses-include-in-layout-xml-file-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragments.Comm.CommLocalDownloadBle"
+    android:id="@+id/viewBleSubmenuDatePomiar"
+    android:layout_width="0dp"
+    android:layout_height="205dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent">
+
+    <Button
+        android:id="@+id/btnCommLocalDownloadBlePomiar"
+        android:layout_width="145dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:enabled="false"
+        android:text="Pomiar"
+        app:layout_constraintStart_toStartOf="@+id/inputDate"
+        app:layout_constraintTop_toBottomOf="@+id/inputDate" />
+
+    <Button
+        android:id="@+id/btnCommLocalDownloadBleSynch"
+        android:layout_width="145dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:enabled="false"
+        android:text="Synch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/inputDate"
+        android:layout_width="149dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:ems="10"
+        android:hint="RRRR-MM-DD"
+        android:inputType="date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnCommLocalDownloadBleSynch"
+        tools:layout_conversion_absoluteHeight="45dp"
+        tools:layout_conversion_absoluteWidth="401dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
