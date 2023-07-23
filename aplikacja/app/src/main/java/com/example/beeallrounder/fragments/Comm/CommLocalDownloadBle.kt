@@ -9,7 +9,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.INVISIBLE
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.app.ActivityCompat
@@ -21,6 +20,7 @@ import com.example.beeallrounder.LocalComm.BLEControllerListener
 import com.example.beeallrounder.LocalComm.RemoteBLEDeviceController
 import com.example.beeallrounder.R
 import com.example.beeallrounder.databases.oldDB.viewmodel.UserViewModelOld
+import com.example.beeallrounder.fragments.toast
 
 
 class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLEControllerListener {
@@ -31,7 +31,9 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
 
     private lateinit var bluetoothManager: BluetoothManager
 
-    private lateinit var logView: TextView
+    private lateinit var logScrollView: ScrollView
+    private lateinit var logTextView: TextView
+
     private lateinit var btnScan: Button
     private lateinit var btnConnect: Button
     private lateinit var btnDisconnect: Button
@@ -39,11 +41,16 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
     private lateinit var btnPomiar: Button
     private lateinit var inputDate: EditText
 
+    private lateinit var btnSetOffset: Button
+    private lateinit var btnSetScale: Button
+    private lateinit var btnSetSleepTime: Button
+
     private lateinit var spinnerDevice: Spinner
     private lateinit var spinnerSubmenu: Spinner
     private val submenusList = listOf("pomiarSynch","weightSet")
 
     private lateinit var viewSubmenuPomiarSynch: View
+    private lateinit var viewSubmenuWeightSet: View
 
     object ButtonsController {
         var flag: Boolean = false
@@ -105,7 +112,8 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
 
         bluetoothManager = requireContext().getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
 
-        logView = view.findViewById<TextView>(R.id.logViewCommLocalDownloadBle)
+        logScrollView = view.findViewById(R.id.viewLog)
+        logTextView = view.findViewById<TextView>(R.id.logViewCommLocalDownloadBle)
 
         inputDate = view.findViewById(R.id.inputDate)
 
@@ -168,6 +176,14 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
         setSpinnerOptions(submenusList,spinnerSubmenu)
 
         viewSubmenuPomiarSynch = view.findViewById(R.id.viewBleSubmenuDatePomiar)
+        viewSubmenuWeightSet = view.findViewById(R.id.viewBleSubmenuWeightSet)
+
+        btnSetOffset = view.findViewById(R.id.btnCommLocalDownloadBleSetWeightOffset)
+        btnSetOffset.setOnClickListener {
+            log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA${logTextView.text.length}")
+        }
+
+
 
         Thread{
             //update UI base on backend thread input
@@ -224,9 +240,11 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
                 when(position) {
                     0 -> {
                         viewSubmenuPomiarSynch.visibility = View.VISIBLE
+                        viewSubmenuWeightSet.visibility = View.GONE
                     }
                     1 -> {
                         viewSubmenuPomiarSynch.visibility = View.GONE
+                        viewSubmenuWeightSet.visibility = View.VISIBLE
                     }
                 }
             }
@@ -270,8 +288,15 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
     }
 
     private fun log(s: String) {
-        if(logView.text.length > 1000) logView.text = logView.text.drop(s.length)
-        logView.text = "${logView.text}\n$s"
+        if(logTextView.text.length + s.length > 999) {
+            requireContext().toast("log limit osiagniety")
+            logTextView.text = "${logTextView.text.drop(s.length+1)}\n$s"
+        }
+        else
+            logTextView.text = "${logTextView.text}\n$s"
+
+        //logScrollView.scrollTo(0, logScrollView.bottom);
+        logScrollView.fullScroll(View.FOCUS_DOWN);
     }
 
     override fun BLEControllerConnected() {

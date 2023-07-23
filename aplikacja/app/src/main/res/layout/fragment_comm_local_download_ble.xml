@@ -76,7 +76,116 @@
         app:layout_constraintStart_toStartOf="@+id/btnCommLocalDownloadBleDisconnect"
         app:layout_constraintTop_toBottomOf="@+id/btnCommLocalDownloadBleConnect" />
 
-    <include layout="@layout/ble_download_submenu_0"/>
-    <include layout="@layout/ble_download_submenu_1"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        tools:context=".fragments.Comm.CommLocalDownloadBle"
+        android:id="@+id/viewBleSubmenuDatePomiar"
+        android:layout_width="0dp"
+        android:layout_height="205dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/btnCommLocalDownloadBlePomiar"
+            android:layout_width="145dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:enabled="false"
+            android:text="Pomiar"
+            app:layout_constraintStart_toStartOf="@+id/inputDate"
+            app:layout_constraintTop_toBottomOf="@+id/inputDate" />
+
+        <Button
+            android:id="@+id/btnCommLocalDownloadBleSynch"
+            android:layout_width="145dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:enabled="false"
+            android:text="Synch"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/inputDate"
+            android:layout_width="149dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="32dp"
+            android:ems="10"
+            android:hint="RRRR-MM-DD"
+            android:inputType="date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnCommLocalDownloadBleSynch"
+            tools:layout_conversion_absoluteHeight="45dp"
+            tools:layout_conversion_absoluteWidth="401dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/viewBleSubmenuWeightSet"
+        android:layout_width="0dp"
+        android:layout_height="205dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/btnCommLocalDownloadBleSetWeightOffset"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:text="Set offset"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/editTextCommLocalDownloadBleSetWeightOffset"
+            android:layout_width="150dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="32dp"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnCommLocalDownloadBleSetWeightScale"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Set scale"
+            app:layout_constraintEnd_toEndOf="@+id/btnCommLocalDownloadBleSetWeightOffset"
+            app:layout_constraintTop_toBottomOf="@+id/btnCommLocalDownloadBleSetWeightOffset" />
+
+        <EditText
+            android:id="@+id/editTextCommLocalDownloadBleSetWeightScale"
+            android:layout_width="150dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            app:layout_constraintStart_toStartOf="@+id/editTextCommLocalDownloadBleSetWeightOffset"
+            app:layout_constraintTop_toBottomOf="@+id/editTextCommLocalDownloadBleSetWeightOffset" />
+
+        <EditText
+            android:id="@+id/editTextCommLocalDownloadBleSetSleepTime"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:inputType="numberSigned"
+            app:layout_constraintStart_toStartOf="@+id/editTextCommLocalDownloadBleSetWeightScale"
+            app:layout_constraintTop_toBottomOf="@+id/editTextCommLocalDownloadBleSetWeightScale" />
+
+        <Button
+            android:id="@+id/btnCommLocalDownloadBleSetSleepTime"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Button"
+            app:layout_constraintEnd_toEndOf="@+id/btnCommLocalDownloadBleSetWeightScale"
+            app:layout_constraintTop_toBottomOf="@+id/btnCommLocalDownloadBleSetWeightScale" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
