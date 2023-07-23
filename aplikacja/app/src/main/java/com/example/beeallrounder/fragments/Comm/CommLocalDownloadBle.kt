@@ -6,7 +6,9 @@ import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,20 +69,12 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
 
     private val queueToLog: MutableList<String> = mutableListOf()
 
-    private val PERMISSIONS_STORAGE = arrayOf(
-        Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION,
-        Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,
-        Manifest.permission.BLUETOOTH_SCAN,
-        Manifest.permission.BLUETOOTH_CONNECT,
-        Manifest.permission.BLUETOOTH_PRIVILEGED
-    )
     private val PERMISSIONS_LOCATION = arrayOf(
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION,
         Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,
+    )
+    private val PERMISSIONS_BLE = arrayOf(
         Manifest.permission.BLUETOOTH_SCAN,
         Manifest.permission.BLUETOOTH_CONNECT,
         Manifest.permission.BLUETOOTH_PRIVILEGED
@@ -357,13 +351,21 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        scanResume()
-    }
-
     private fun scanResume() {
-        log("onResume");
+
+        if (!bluetoothManager.adapter.isEnabled) {
+            val enableBTIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+            requireActivity().startActivity(enableBTIntent)
+            return
+        }
+
+        val lm = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (!lm.isLocationEnabled) {
+            val enableLocationIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+            requireActivity().startActivity(enableLocationIntent)
+            return
+        }
+
         devicesList.clear()
         this.bleController = BLEController.getInstance(requireContext());
         this.bleController?.addBLEControllerListener(this);
@@ -381,6 +383,12 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
             val enableBTIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
             requireActivity().startActivity(enableBTIntent)
         }
+
+        val lm = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        if (!lm.isLocationEnabled) {
+            val enableLocationIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+            requireActivity().startActivity(enableLocationIntent)
+        }
     }
 
     override fun onPause() {
@@ -389,18 +397,27 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
     }
 
     private fun checkPermissions() {
-        val permission1 =
-            ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        val permission2 =
+        val permissionBle =
             ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.BLUETOOTH_SCAN)
-        if (permission1 != PackageManager.PERMISSION_GRANTED) {
+        val permissionLocation =
+            ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+
+        if(permissionBle != PackageManager.PERMISSION_GRANTED && permissionLocation != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                PERMISSIONS_LOCATION + PERMISSIONS_BLE,
+                1
+            )
+        }
+        else if (permissionBle != PackageManager.PERMISSION_GRANTED) {
             // We don't have permission so prompt the user
             ActivityCompat.requestPermissions(
                 requireActivity(),
-                PERMISSIONS_STORAGE,
+                PERMISSIONS_BLE,
                 1
             )
-        } else if (permission2 != PackageManager.PERMISSION_GRANTED) {
+        }
+        else if (permissionLocation != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
                 requireActivity(),
                 PERMISSIONS_LOCATION,
