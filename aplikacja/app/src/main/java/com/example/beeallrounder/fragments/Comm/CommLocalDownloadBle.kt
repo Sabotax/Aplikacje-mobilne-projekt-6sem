@@ -42,8 +42,11 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
     private lateinit var inputDate: EditText
 
     private lateinit var btnSetOffset: Button
+    private lateinit var editTextSetOffset: EditText
     private lateinit var btnSetScale: Button
+    private lateinit var editTextSetScale: EditText
     private lateinit var btnSetSleepTime: Button
+    private lateinit var editTextSetSleepTime: EditText
 
     private lateinit var spinnerDevice: Spinner
     private lateinit var spinnerSubmenu: Spinner
@@ -179,11 +182,26 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
         viewSubmenuWeightSet = view.findViewById(R.id.viewBleSubmenuWeightSet)
 
         btnSetOffset = view.findViewById(R.id.btnCommLocalDownloadBleSetWeightOffset)
+        editTextSetOffset = view.findViewById(R.id.editTextCommLocalDownloadBleSetWeightOffset)
         btnSetOffset.setOnClickListener {
-            log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA${logTextView.text.length}")
+            val valueToSet = editTextSetOffset.text.toString()
+            log("Ustawianie offsetu wagi urządzenia na $valueToSet")
+            devicesList[currentSpinnerDeviceOption!!].sendData(
+                RemoteBLEDeviceController.Companion.INSTRUCTION_TYPE_SENDING.SET_OFFSET,
+                valueToSet
+            )
         }
 
-
+        btnSetScale = view.findViewById(R.id.btnCommLocalDownloadBleSetWeightScale)
+        editTextSetScale = view.findViewById(R.id.editTextCommLocalDownloadBleSetWeightScale)
+        btnSetScale.setOnClickListener {
+            val valueToSet = editTextSetScale.text.toString()
+            log("Ustawianie skali wagi urządzenia na $valueToSet")
+            devicesList[currentSpinnerDeviceOption!!].sendData(
+                RemoteBLEDeviceController.Companion.INSTRUCTION_TYPE_SENDING.SET_SCALE,
+                valueToSet
+            )
+        }
 
         Thread{
             //update UI base on backend thread input
