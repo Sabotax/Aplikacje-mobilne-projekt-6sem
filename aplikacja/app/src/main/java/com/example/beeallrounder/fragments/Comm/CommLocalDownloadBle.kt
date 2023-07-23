@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.app.ActivityCompat
@@ -38,7 +39,11 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
     private lateinit var btnPomiar: Button
     private lateinit var inputDate: EditText
 
-    private lateinit var spinner: Spinner
+    private lateinit var spinnerDevice: Spinner
+    private lateinit var spinnerSubmenu: Spinner
+    private val submenusList = listOf("pomiarSynch","weightSet")
+
+    private lateinit var viewSubmenuPomiarSynch: View
 
     object ButtonsController {
         var flag: Boolean = false
@@ -73,7 +78,7 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
 
     //private val devicesList = mutableListOf<Pair<String,String>?>()
     private val devicesList = mutableListOf<RemoteBLEDeviceController>()
-    private var currentSpinnerOption: Int? = null
+    private var currentSpinnerDeviceOption: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -111,9 +116,9 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
 
         btnConnect = view.findViewById<Button>(R.id.btnCommLocalDownloadBleConnect)
         btnConnect.setOnClickListener {
-            if(currentSpinnerOption != null) {
-                log("attempting connection to $currentSpinnerOption")
-                val address = devicesList[currentSpinnerOption!!].deviceAddress
+            if(currentSpinnerDeviceOption != null) {
+                log("attempting connection to $currentSpinnerDeviceOption")
+                val address = devicesList[currentSpinnerDeviceOption!!].deviceAddress
                 if (address == null) log("err2, z jakiegoś powodu adres urządzenia to null")
                 else
                     bleController?.connectToDevice(address)
@@ -138,8 +143,8 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
                 log("Zły format daty")
             }
             else {
-                if(currentSpinnerOption != null) {
-                    devicesList[currentSpinnerOption!!].sendData(
+                if(currentSpinnerDeviceOption != null) {
+                    devicesList[currentSpinnerDeviceOption!!].sendData(
                         RemoteBLEDeviceController.Companion.INSTRUCTION_TYPE_SENDING.START_SENDING,
                         inputDate.text.toString()
                     )
@@ -150,15 +155,19 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
         btnPomiar = view.findViewById<Button>(R.id.btnCommLocalDownloadBlePomiar)
         btnPomiar.setOnClickListener {
             log("Wykonuję pomiar")
-            if(currentSpinnerOption != null) {
-                devicesList[currentSpinnerOption!!].sendData(
+            if(currentSpinnerDeviceOption != null) {
+                devicesList[currentSpinnerDeviceOption!!].sendData(
                     RemoteBLEDeviceController.Companion.INSTRUCTION_TYPE_SENDING.WYKONAJ_POMIAR,
                     ""
                 )
             }
         }
 
-        spinner = view.findViewById(R.id.spinner)
+        spinnerDevice = view.findViewById(R.id.spinnerDevice)
+        spinnerSubmenu = view.findViewById(R.id.spinnerSubmenu)
+        setSpinnerOptions(submenusList,spinnerSubmenu)
+
+        viewSubmenuPomiarSynch = view.findViewById(R.id.viewBleSubmenuDatePomiar)
 
         Thread{
             //update UI base on backend thread input
@@ -178,7 +187,7 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
                         btnDisconnect.isEnabled = ButtonsController.btnDisconnect
                         btnSynch.isEnabled = ButtonsController.btnSynch
                         btnPomiar.isEnabled = ButtonsController.btnPomiar
-                        spinner.isEnabled = ButtonsController.spinner
+                        spinnerDevice.isEnabled = ButtonsController.spinner
 
                         ButtonsController.flag = false
                     }
@@ -198,7 +207,7 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
         checkPermissions();
     }
 
-    fun setSpinnerOptions(list: List<String>) {
+    fun setSpinnerOptions(list: List<String>, spinner: Spinner) {
         val adapter = ArrayAdapter<String>(requireContext(),android.R.layout.simple_spinner_dropdown_item,list)
         spinner.adapter = adapter
 
@@ -207,14 +216,34 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         //val item  = parent?.getItemAtPosition(position) as? String
-        currentSpinnerOption = position
+        when(parent?.id) {
+            spinnerDevice.id -> {
+                currentSpinnerDeviceOption = position
+            }
+            spinnerSubmenu.id -> {
+                when(position) {
+                    0 -> {
+                        viewSubmenuPomiarSynch.visibility = View.VISIBLE
+                    }
+                    1 -> {
+                        viewSubmenuPomiarSynch.visibility = View.GONE
+                    }
+                }
+            }
+        }
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
-        currentSpinnerOption = null
-        btnConnect.isEnabled = false
-        ButtonsController.btnConnect = false
-        // nie potrzeba flagi, bo to leci z wątku UI, nie backendowego BLE
+        when(parent?.id) {
+            spinnerDevice.id -> {
+                currentSpinnerDeviceOption = null
+                btnConnect.isEnabled = false
+                ButtonsController.btnConnect = false
+            }
+            spinnerSubmenu.id -> {
+                log("bb")
+            }
+        }
     }
 
 //    private fun checkPermissions() {
@@ -273,7 +302,7 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
     override fun BLEDeviceFound(name: String, address: String) {
         fireLog("Device $name found with address $address")
         devicesList.add(RemoteBLEDeviceController(name,address,this,bleController!!))
-        setSpinnerOptions(devicesList.map { it.deviceName })
+        setSpinnerOptions(devicesList.map { it.deviceName },spinnerDevice)
         ButtonsController.btnConnect = true
         ButtonsController.flag = true
     }
