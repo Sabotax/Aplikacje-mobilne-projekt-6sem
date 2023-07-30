@@ -157,7 +157,7 @@ class CommLocalDownloadBle : Fragment(), AdapterView.OnItemSelectedListener, BLE
             }
         }
 
-        btnPomiar = view.findViewById<Button>(R.id.btnCommLocalDownloadBlePomiar)
+        btnPomiar = view.findViewById<Button>(R.id.btnCommLocalDownloadBlePomiarWaga)
         btnPomiar.setOnClickListener {
             log("Wykonuję pomiar")
             if(currentSpinnerDeviceOption != null) {
