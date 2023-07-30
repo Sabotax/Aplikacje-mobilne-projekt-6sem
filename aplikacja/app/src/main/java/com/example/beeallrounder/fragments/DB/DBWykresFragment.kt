@@ -13,15 +13,14 @@ import com.example.beeallrounder.R
 import com.example.beeallrounder.databases.dbEspSynch.viewmodel.UserViewModel
 import com.example.beeallrounder.fragments.round
 import com.example.beeallrounder.fragments.toast
+import com.jjoe64.graphview.DefaultLabelFormatter
 import com.jjoe64.graphview.GraphView
-import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.*
-import kotlin.math.round
 
 
 class DBWykresFragment : Fragment(),AdapterView.OnItemSelectedListener {
@@ -105,7 +104,22 @@ class DBWykresFragment : Fragment(),AdapterView.OnItemSelectedListener {
                         requireActivity().toast("Czas: ${LocalDateTime.ofEpochSecond(dataPoint.x.toLong(),0,
                             ZoneOffset.of("+2"))} \nWaga: ${dataPoint.y.round(2) }")
                     }
-                    graph.gridLabelRenderer.labelFormatter = DateAsXAxisLabelFormatter(activity);
+                    //graph.gridLabelRenderer.labelFormatter = DateAsXAxisLabelFormatter(activity);
+                    graph.gridLabelRenderer.labelFormatter = object : DefaultLabelFormatter() {
+                        override fun formatLabel(value: Double, isValueX: Boolean): String {
+                            return if (isValueX) {
+                                // show normal x values
+
+                                // format as date
+                                val date = LocalDateTime.ofEpochSecond(value.toLong(),0, ZoneOffset.of("+2"))
+                                return date.dayOfMonth.toString()
+                            } else {
+                                // show currency for y values
+                                super.formatLabel(value, isValueX)
+                            }
+                        }
+                    }
+
                     graph.addSeries(series)
                 }
             }
